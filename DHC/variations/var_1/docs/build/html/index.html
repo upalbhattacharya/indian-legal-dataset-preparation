@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Welcome to DHC/var_1’s documentation! &#8212; DHC/var_1  documentation</title>
+    <title>DHC/var_1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -15,7 +15,6 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="var_1" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -35,27 +34,302 @@
   <section id="welcome-to-dhc-var-1-s-documentation">
 <h1>Welcome to DHC/var_1’s documentation!<a class="headerlink" href="#welcome-to-dhc-var-1-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">var_1</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="clean.html">clean module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extract_statutes.html">extract_statutes module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mask.html">mask module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="process.html">process module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="segment.html">segment module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
-</ul>
-</li>
-</ul>
+<span id="document-modules"></span><section id="var-1">
+<h2>var_1<a class="headerlink" href="#var-1" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-clean"></span><section id="module-clean">
+<span id="clean-module"></span><h3>clean module<a class="headerlink" href="#module-clean" title="Permalink to this headline">¶</a></h3>
+<p>initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
+out substitutions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="clean.clean">
+<span class="sig-prename descclassname"><span class="pre">clean.</span></span><span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#clean.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean unwanted characters, extra whitespaces, unnecessary punctuations
+and sentence splits.</p>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Text to process.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Processed text.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="clean.main">
+<span class="sig-prename descclassname"><span class="pre">clean.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#clean.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<span id="document-extract_statutes"></span><section id="module-extract_statutes">
+<span id="extract-statutes-module"></span><h3>extract_statutes module<a class="headerlink" href="#module-extract_statutes" title="Permalink to this headline">¶</a></h3>
+<p>extract_statutes.py: Extract statutes from documents.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.check_exists">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">check_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actsec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statutes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.check_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return valid cited statutes.</p>
+<dl class="simple">
+<dt>actsec<span class="classifier">set</span></dt><dd><p>Set of statutes cited and their spans.</p>
+</dd>
+<dt>statutues: dict</dt><dd><p>Dictionary of statutes to reference.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>cleaned<span class="classifier">set</span></dt><dd><p>Valid set of statutes and their spans.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.clean">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act_sec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up given set of extracted sections to standard format.</p>
+<dl class="simple">
+<dt>actsec<span class="classifier">set</span></dt><dd><p>Set containing statutes and their spans.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>actsec<span class="classifier">set</span></dt><dd><p>Set containing formatted statutes and their spans.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.extract_statutes">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">extract_statutes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">per_sentence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.extract_statutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all statutes mentioned in the given text.</p>
+<dl class="simple">
+<dt>text<span class="classifier">str or dict</span></dt><dd><p>Text to extract statutes from.</p>
+</dd>
+<dt>per_sentence<span class="classifier">bool, default</span><span class="classifier">True</span></dt><dd><p>Whether to find the statutes for each sentence. (Only works when a
+dictionary is passed to text.)</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>secs<span class="classifier">dict</span></dt><dd><p>Dictionary of cited statutes.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.get_statutes">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">get_statutes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actlist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.get_statutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all statutes cited in text.</p>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Text to find statutes from.</p>
+</dd>
+<dt>actlist<span class="classifier">list</span></dt><dd><p>List of acts to use for reference.</p>
+</dd>
+<dt>unit<span class="classifier">str</span></dt><dd><p>Article or section.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>actsec<span class="classifier">set</span></dt><dd><p>Set containing cited statutes and spans.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">set</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.main">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="extract_statutes.sentence_align">
+<span class="sig-prename descclassname"><span class="pre">extract_statutes.</span></span><span class="sig-name descname"><span class="pre">sentence_align</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orig</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#extract_statutes.sentence_align" title="Permalink to this definition">¶</a></dt>
+<dd><p>Align citations to sentences.</p>
+<dl class="simple">
+<dt>sentence_dict<span class="classifier">dict</span></dt><dd><p>Dictionary of statute citations.</p>
+</dd>
+<dt>orig<span class="classifier">dict</span></dt><dd><p>Dictionary of sentences.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>orig<span class="classifier">dict</span></dt><dd><p>Dictionary with sections given for each sentence.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<span id="document-mask"></span><section id="module-mask">
+<span id="mask-module"></span><h3>mask module<a class="headerlink" href="#module-mask" title="Permalink to this headline">¶</a></h3>
+<p>mask.py: Mask various patterns for given data.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mask.main">
+<span class="sig-prename descclassname"><span class="pre">mask.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mask.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mask.mask">
+<span class="sig-prename descclassname"><span class="pre">mask.</span></span><span class="sig-name descname"><span class="pre">mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mask.mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask given patterns by given mask strings.</p>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Text to process.</p>
+</dd>
+<dt>patterns<span class="classifier">List[Tuple[str, Pattern, str]]</span></dt><dd><p>List of regex patterns and replacement tokens.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Processed text.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<span id="document-process"></span><section id="module-process">
+<span id="process-module"></span><h3>process module<a class="headerlink" href="#module-process" title="Permalink to this headline">¶</a></h3>
+<p>script.py: Run all pre-processing scripts</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="process.main">
+<span class="sig-prename descclassname"><span class="pre">process.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#process.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<span id="document-segment"></span><section id="module-segment">
+<span id="segment-module"></span><h3>segment module<a class="headerlink" href="#module-segment" title="Permalink to this headline">¶</a></h3>
+<p>segment.py: Segments documents into sentences.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="segment.custom_sentencizer">
+<span class="sig-prename descclassname"><span class="pre">segment.</span></span><span class="sig-name descname"><span class="pre">custom_sentencizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#segment.custom_sentencizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom sentencizer to ignore brackets as sentence boundaries.</p>
+<dl class="simple">
+<dt>doc<span class="classifier">str</span></dt><dd><p>Text to process.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>doc<span class="classifier">spacy.Doc</span></dt><dd><p>spacy document with sentence boundaries.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="segment.fix_sentence_boundaries">
+<span class="sig-prename descclassname"><span class="pre">segment.</span></span><span class="sig-name descname"><span class="pre">fix_sentence_boundaries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#segment.fix_sentence_boundaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix sentence boundaries to account for extra spaces ignored by spacy.</p>
+<dl class="simple">
+<dt>sentence_dict: dict</dt><dd><p>Dictionary containing sentence text and spans.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>sent_dict: dict</dt><dd><p>Dictionary containing sentence texts and rectified spans.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="segment.main">
+<span class="sig-prename descclassname"><span class="pre">segment.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#segment.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="segment.segment">
+<span class="sig-prename descclassname"><span class="pre">segment.</span></span><span class="sig-name descname"><span class="pre">segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#segment.segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Segment sentences by boundary.</p>
+<dl class="simple">
+<dt>text<span class="classifier">str</span></dt><dd><p>Text to process.</p>
+</dd>
+<dt>nlp<span class="classifier">spacy object(?)</span></dt><dd><p>Spacy object to use for segmentation.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>sent_dict<span class="classifier">dict</span></dt><dd><p>Dictionary containing each sentence and their span.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<span id="document-utils"></span><section id="module-utils">
+<span id="utils-module"></span><h3>utils module<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h3>
+<p>utils.py: Utilities for processing</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.DotDict">
+<em class="property"><span class="pre">class</span><span class="w">  </span></em><span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">DotDict</span></span><a class="headerlink" href="#utils.DotDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>dot.notation access to dictionary attributes</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_text">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load html data and return text of the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.save_format">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">save_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.save_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves data to the given path depending on the data type.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.set_logger">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">set_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.set_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set logger to log information to the terminal and the specified path.</p>
+<dl class="simple">
+<dt>log_path<span class="classifier">str</span></dt><dd><p>Path to log run-stats to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </div>
 </section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
+</div>
 </section>
 
 
@@ -77,27 +351,16 @@
 <h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">var_1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-modules">var_1</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="modules.html" title="next chapter">var_1</a></li>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
 
 
 
@@ -117,9 +380,6 @@
       Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
     </div>
 
     

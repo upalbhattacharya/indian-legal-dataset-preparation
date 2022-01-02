@@ -7,7 +7,7 @@ Welcome to DHC/var_1's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    modules

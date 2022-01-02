@@ -1,7 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""segment.py: Segments documents into sentences.
+"""Segments documents into sentences.
 """
 
 import spacy

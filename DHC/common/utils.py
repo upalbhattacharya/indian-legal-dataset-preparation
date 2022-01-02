@@ -1,5 +1,5 @@
 #!/home/workboots/workEnv/bin/python3
-"""utils.py: Common utilities.
+"""Common utilities.
 """
 
 import logging

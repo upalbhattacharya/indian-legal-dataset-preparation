@@ -1,8 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
-out substitutions.
+"""Remove extra whitespaces, non-utf-8 characters and carry out substitutions.
 """
 
 import os

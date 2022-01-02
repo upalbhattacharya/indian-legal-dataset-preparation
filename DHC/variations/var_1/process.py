@@ -1,7 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""script.py: Run all pre-processing scripts
+"""Run all pre-processing scripts in a pipeline.
 """
 
 import spacy

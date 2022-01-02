@@ -1,7 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""extract_statutes.py: Extract statutes from documents.
+"""Extract statutes from documents.
 """
 
 import logging

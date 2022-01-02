@@ -2,7 +2,7 @@
 =====================
 
 .. automodule:: DHC.variations.var_1
-
+  
    
    
    
@@ -25,6 +25,7 @@
 
 .. autosummary::
    :toctree:
+   :template: custom-module-template.rst                 
    :recursive:
 
    DHC.variations.var_1.clean

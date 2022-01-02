@@ -2,7 +2,7 @@ DHC.variations.var\_1.extract\_statutes
 =======================================
 
 .. automodule:: DHC.variations.var_1.extract_statutes
-
+  
    
    
    
@@ -12,6 +12,7 @@ DHC.variations.var\_1.extract\_statutes
    .. rubric:: Functions
 
    .. autosummary::
+      :toctree:                                          
    
       check_exists
       clean

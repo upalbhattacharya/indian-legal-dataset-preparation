@@ -2,7 +2,7 @@
 ==========
 
 .. automodule:: DHC.common
-
+  
    
    
    
@@ -25,6 +25,7 @@
 
 .. autosummary::
    :toctree:
+   :template: custom-module-template.rst                 
    :recursive:
 
    DHC.common.create_splits

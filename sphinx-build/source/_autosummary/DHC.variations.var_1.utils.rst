@@ -2,7 +2,7 @@ DHC.variations.var\_1.utils
 ===========================
 
 .. automodule:: DHC.variations.var_1.utils
-
+  
    
    
    
@@ -12,6 +12,7 @@ DHC.variations.var\_1.utils
    .. rubric:: Functions
 
    .. autosummary::
+      :toctree:                                          
    
       get_text
       save_format
@@ -24,6 +25,8 @@ DHC.variations.var\_1.utils
    .. rubric:: Classes
 
    .. autosummary::
+      :toctree:                                          
+      :template: custom-class-template.rst               
    
       DotDict
    

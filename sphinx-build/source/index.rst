@@ -11,6 +11,7 @@ different datasets to generate different variations for various experiments.
 
 .. autosummary::
    :toctree: _autosummary
+   :template: custom-module-template.rst
    :recursive:
 
    DHC.common

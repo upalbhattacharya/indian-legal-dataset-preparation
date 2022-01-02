@@ -1,15 +1,20 @@
-"""utils.py: Utilities for var_1
+#!/home/workboots/workEnv/bin/python3
+# -*- coding: utf-8 -*-
+
+"""
+utils.py: Utilities for processing
+"""
+
+import logging
+from bs4 import BeautifulSoup as bs
+import json
+import os
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
 __licencse__ = ""
 __version__ = "1.0"
 __email__ = "upal.bhattacharya@gmail.com"
-"""
-import logging
-from bs4 import BeautifulSoup as bs
-import json
-import os
 
 
 def set_logger(log_path):

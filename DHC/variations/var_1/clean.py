@@ -1,17 +1,19 @@
 #!/home/workboots/workEnv/bin/python3
+# -*- coding: utf-8 -*-
 
-"""initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
+"""
+initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
 out substitutions.
+"""
+
+import re
+from string import punctuation
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
 __licencse__ = ""
 __version__ = ""
 __email__ = "upal.bhattacharya@gmail.com"
-"""
-
-import re
-from string import punctuation
 
 # For substitutions
 with open("act_titles.txt", 'r') as f:

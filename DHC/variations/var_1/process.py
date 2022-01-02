@@ -1,19 +1,22 @@
 #!/home/workboots/workEnv/bin/python3
+# -*- coding: utf-8 -*-
 
-"""script.py: Run all pre-processing scripts
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = ""
-__email__ = "upal.bhattacharya@gmail.com"
 """
+script.py: Run all pre-processing scripts
+"""
+
 import spacy
 
 from clean import clean
 from mask import mask, patterns
 from segment import segment, custom_sentencizer
 from extract_statutes import extract_statutes
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = ""
+__email__ = "upal.bhattacharya@gmail.com"
 
 
 def main():

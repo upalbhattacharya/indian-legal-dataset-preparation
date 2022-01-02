@@ -1,16 +1,19 @@
 #!/home/workboots/workEnv/bin/python3
+# -*- coding: utf-8 -*-
 
-"""script.py: Segments documents into sentences
+"""
+script.py: Segments documents into sentences
+"""
+
+import spacy
+from collections import defaultdict
+from spacy.language import Language
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
 __licencse__ = ""
 __version__ = "1.0"
 __email__ = "upal.bhattacharya@gmail.com"
-"""
-import spacy
-from collections import defaultdict
-from spacy.language import Language
 
 
 @Language.component("custom_sentencizer")

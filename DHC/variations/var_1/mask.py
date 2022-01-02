@@ -1,18 +1,20 @@
 #!/home/workboots/workEnv/bin/python3
+# -*- coding: utf-8 -*-
 
-"""mask.py: Mask various patterns for given data.
+"""
+mask.py: Mask various patterns for given data.
+"""
+
+import re
+from typing import List, Pattern, Tuple
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
 __licencse__ = ""
 __version__ = "1.0"
 __email__ = "upal.bhattacharya@gmail.com"
-"""
 
-
-import re
-from typing import List, Pattern, Tuple
-
+# Regex patterns used to mask different information
 patterns = [
     ('name',
         r'M(?:r|s|rs)\.\s*[A-Za-z.]+\s+[A-Za-z.]+(?:\s+[A-Za-z]+)?,?',

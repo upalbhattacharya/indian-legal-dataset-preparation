@@ -1,7 +1,17 @@
+#!/home/workboots/workEnv/bin/python3
+"""utils.py: Common utilities.
+"""
+
 import logging
 import time
 from functools import wraps
 import re
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
 
 
 def time_logger(original_func):

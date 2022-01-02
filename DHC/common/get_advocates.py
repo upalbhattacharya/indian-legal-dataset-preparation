@@ -1,62 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 """
-For each case, the script looks through certain sections of the document to
-find the names of advocates based on regexes.
-
-Location of the names of the advocates in the document:
-    * Usually, the names of the advocates are found in the 'pre' div of the
-    html document.
-    * The Petitioner's advocates' names are usually found after a phrase like
-    "Petitioner Through".
-    * The Respondent's advocates' names are usally found after such a similar
-    phrase.
-    * IN SOME SITUATIONS, the required names of the advocates are not
-    contained in the 'pre' div and can be usually found in the first few
-    paragraphs of the document.
-
-Points for the names:
-    * Names of advocates always start with a salutation like Mr., Ms. or Mrs.
-    * Names can be in full like 'Yogesh Sharma' or with initials
-    'O.M. Prasad'.
-    * Spacing in names also varies.
-    * Names can have a middle name as well.
-    * The surname/title is not abbreviated. Other parts of the name can appear
-    abbreviated or as initials.
-
-Considerations for the regex matching:
-    * Names are USUALLY followed by a comma. In certain instances, this is not
-    followed and needs to be handled separately.
-    * The regex pattern matches for both names without a middle name and names
-    with a middle name.
-    * For names without a middle name, the regex can provide slightly
-    erroneous results like "Yogesh Sharma and" that need to be handled.
-
-Procedure followed: For each document:
-    * Get the relevant text portions (pre and p_1 to p_3) from the document.
-    * Use the regex pattern matching to get names/strings.
-    * Remove any repititions found (the selected portion of text can have the
-    names repeated several times.
-    * Removing any trailing commas ','.
-    * Remove titles like 'Mr.' and 'Mrs.' from the extracted and pruned
-    strings.
-    * Remove any non-name words by checking for non-capitalized words in the
-    extracted strings and dropping everything after the first non-capitalized
-    word.
-    * Remove all spaces and punctuation marks '.'. (For convenience of
-    checking similar names).
-    * In a dictionary with the names as keys, add the case number to each of
-    the advocates extracted(in a list) if it has not been added already.
-    * For each advocate, get at most 10 of the advocate names with at least
-    0.85 gesalt pattern matching score.
-    * For each advocate, check whether any of the similar names have the same
-    case list. If so, retain the shorter name and drop the larger one from the
-    dictionary.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = ""
-__email__ = "upal.bhattacharya@gmail.com"
+Finds names of advocates in a given set of files and creates an advocate-case
+mapping.
 """
 import argparse
 import json
@@ -68,6 +13,12 @@ from difflib import get_close_matches
 from bs4 import BeautifulSoup
 
 from utils import set_logger, time_logger, clean_names, update_dict
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = ""
+__email__ = "upal.bhattacharya@gmail.com"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--data_path",

@@ -1,12 +1,6 @@
 #!/home/workboots/workEnv/bin/python3
 """get_adv_sections.py: Finds the sections cited for each advocate from their
 cases.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.1"
-__email__ = "upal.bhattacharya@gmail.com"
 """
 import argparse
 import json
@@ -18,6 +12,12 @@ from collections import Counter, defaultdict
 from itertools import combinations
 
 from utils import set_logger
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.1"
+__email__ = "upal.bhattacharya@gmail.com"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_path",
@@ -31,6 +31,18 @@ parser.add_argument("-s", "--section_path",
 
 
 def prettify(text: str) -> str:
+    """Return text with beautification.
+
+    Parameters
+    ----------
+    text : str
+        text
+
+    Returns
+    -------
+    str
+
+    """
     text = text.split("_")
     if (text[0] == "Constitution"):
         return (text[0] + "; Article " + text[-1])
@@ -39,7 +51,20 @@ def prettify(text: str) -> str:
 
 
 def get_case_sections(path: str, case: str) -> list:
-    """Return list of statutes cited."""
+    """Return list of statutes cited.
+
+    Parameters
+    ----------
+    path : str
+        path
+    case : str
+        case
+
+    Returns
+    -------
+    list
+
+    """
 
     with open(os.path.join(path, f"{case}.json"), 'r') as f:
         data = json.load(f)

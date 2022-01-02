@@ -1,12 +1,6 @@
 #!/home/workboots/workEnv/bin/python3
 """get_targets.py: Map cases of adv_case_splits to targets according to the
 train, db, val and test split setup.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.0"
-__email__ = "upal.bhattacharya@gmail.com"
 """
 import argparse
 import json
@@ -15,6 +9,12 @@ import os
 from pathlib import Path
 
 from utils import set_logger, time_logger
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_path",

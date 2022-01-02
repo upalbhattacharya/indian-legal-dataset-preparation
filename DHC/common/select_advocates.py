@@ -1,12 +1,6 @@
 #!/home/workboots/workEnv/bin/python3
 
 """select_advocates.py: Select advocates based on minimum number of cases.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.0"
-__email__ = "upal.bhattacharya@gmail.com"
 """
 
 import argparse
@@ -15,6 +9,12 @@ import logging
 import os
 
 from utils import set_logger, time_logger
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_path",

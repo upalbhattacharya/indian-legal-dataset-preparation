@@ -2,12 +2,6 @@
 
 """parse_json.py: Extract 'doc' element of raw data (contains required
 information).
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.0"
-__email__ = "upal.bhattacharya@gmail.com"
 """
 
 import argparse
@@ -18,6 +12,13 @@ import os
 from bs4 import BeautifulSoup
 
 from utils import set_logger, time_logger
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
+
 
 parser = argparse.ArgumentParser()
 

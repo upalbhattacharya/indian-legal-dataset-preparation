@@ -1,12 +1,6 @@
 #!/home/workboots/workEnv/bin/python3
 
 """get_case_advocates.py: Maps advocates to cases.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.0"
-__email__ = "upal.bhattacharya@gmail.com"
 """
 import os
 import json
@@ -19,6 +13,12 @@ parser.add_argument("-i", "--input_path",
                     help="Directory to load data from.")
 parser.add_argument("-o", "--output_path", default=None,
                     help="Directory to store results.")
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
 
 
 @time_logger

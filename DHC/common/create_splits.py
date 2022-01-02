@@ -1,15 +1,9 @@
 #!/home/workboots/workEnv/bin/python3
-"""create_splits.py: Create N-Fold cross-validation splits for cases of a given
-list of advocates.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = ""
-__email__ = "upal.bhattacharya@gmail.com"
+"""create_splits.py: Create N-Fold cross-validation splits for cases of a
+given list of advocates.
 """
+
 import argparse
-import csv
 import json
 import logging
 import os
@@ -21,6 +15,12 @@ from sklearn.model_selection import KFold, train_test_split
 
 from utils import set_logger, time_logger
 
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = ""
+__email__ = "upal.bhattacharya@gmail.com"
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-i", "--input_path",
                     help="Directory to load required data from.")
@@ -30,8 +30,25 @@ parser.add_argument("-n", "--nfold", type=int, default=20,
                     help="Number of folds.")
 
 
-def print_list_overlap(train, db, test, val):
-    """Print overlap between given lists."""
+def print_list_overlap(train: list, db: list, test: list, val: list) -> None:
+    """Print overlap between given lists.
+
+    Parameters
+    ----------
+    train : list
+        train
+    db : list
+        db
+    test : list
+        test
+    val : list
+        val
+
+    Returns
+    -------
+    None
+
+    """
 
     db_train = set(train).intersection(set(db))
     db_val = set(db).intersection(set(val))
@@ -48,7 +65,29 @@ def print_list_overlap(train, db, test, val):
     logging.info(f"val test: {val_test}")
 
 
-def remove_overlap(sublist_a, sublist_b, list_obj, extend_obj, least=4):
+def remove_overlap(sublist_a: list, sublist_b: list,
+                   list_obj: list, extend_obj: list, least: int = 4) -> list:
+    """Remove overlaps between sublists to be appended to two lists.
+
+    Parameters
+    ----------
+    sublist_a : list
+        sublist_a
+    sublist_b : list
+        sublist_b
+    list_obj : list
+        list_obj
+    extend_obj : list
+        extend_obj
+    least : int
+        least
+
+    Returns
+    -------
+    list
+
+    """
+
     extend_obj_pruned = list(set(extend_obj) - set(list_obj))
     list_obj_pruned = list(set(list_obj))
 
@@ -61,7 +100,24 @@ def remove_overlap(sublist_a, sublist_b, list_obj, extend_obj, least=4):
     return sublist_a, sublist_b, list_obj_pruned, extend_obj_pruned
 
 
-def save_as_pickle(list_obj, path, flname):
+def save_as_pickle(list_obj: list, path: str, flname: str) -> None:
+    """Save a given object as a pickle object in the specified path.
+
+    Parameters
+    ----------
+    list_obj : list
+        list_obj
+    path : str
+        path
+    flname : str
+        flname
+
+    Returns
+    -------
+    None
+
+    """
+
     with open(os.path.join(path, flname), 'wb') as f:
         pickle.dump(list_obj, f)
 

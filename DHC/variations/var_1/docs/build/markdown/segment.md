@@ -3,7 +3,7 @@
 segment.py: Segments documents into sentences.
 
 
-### segment.custom_sentencizer(doc: str)
+### segment.custom_sentencizer(doc)
 Custom sentencizer to ignore brackets as sentence boundaries.
 
 doc
@@ -15,7 +15,13 @@ doc
     spacy document with sentence boundaries.
 
 
-### segment.fix_sentence_boundaries(sentence_dict: dict)
+* **Return type**
+
+    `object`
+
+
+
+### segment.fix_sentence_boundaries(sentence_dict)
 Fix sentence boundaries to account for extra spaces ignored by spacy.
 
 sentence_dict: dict
@@ -27,9 +33,15 @@ sent_dict: dict
     Dictionary containing sentence texts and rectified spans.
 
 
+* **Return type**
+
+    `dict`
+
+
+
 ### segment.main()
 
-### segment.segment(text: str, nlp)
+### segment.segment(text, nlp)
 Segment sentences by boundary.
 
 text
@@ -43,3 +55,8 @@ nlp
 sent_dict
 
     Dictionary containing each sentence and their span.
+
+
+* **Return type**
+
+    `dict`

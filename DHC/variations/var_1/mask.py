@@ -1,8 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""
-mask.py: Mask various patterns for given data.
+"""mask.py: Mask various patterns for given data.
 """
 
 import re

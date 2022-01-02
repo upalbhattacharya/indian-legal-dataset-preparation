@@ -9,8 +9,14 @@ Bases: `dict`
 dot.notation access to dictionary attributes
 
 
-### utils.get_text(path: str)
+### utils.get_text(path)
 Load html data and return text of the data.
+
+
+* **Return type**
+
+    `str`
+
 
 
 ### utils.save_format(path, flname, data)

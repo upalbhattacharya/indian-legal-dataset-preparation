@@ -5,7 +5,7 @@ mask.py: Mask various patterns for given data.
 
 ### mask.main()
 
-### mask.mask(text: str, patterns: List[Tuple[str, Pattern, str]])
+### mask.mask(text, patterns)
 Mask given patterns by given mask strings.
 
 text
@@ -19,3 +19,8 @@ patterns
 text
 
     Processed text.
+
+
+* **Return type**
+
+    `str`

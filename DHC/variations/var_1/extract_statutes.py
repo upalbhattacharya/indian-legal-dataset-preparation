@@ -1,11 +1,11 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""
-extract_statutes.py: Extract statutes from documents.
+"""extract_statutes.py: Extract statutes from documents.
 """
 
 import logging
+import os
 import re
 from collections import defaultdict
 from itertools import groupby
@@ -18,13 +18,15 @@ __licencse__ = ""
 __version__ = "1.0"
 __email__ = "upal.bhattacharya@gmail.com"
 
+# To avoid Sphinx issues
+present_dir = os.path.dirname(__file__)
 # Getting the set of statutes
-with open("act_titles.txt", 'r') as f:
+with open(os.path.join(present_dir, "act_titles.txt"), 'r') as f:
     acts = f.read()
 acts = acts.split("\n")
 acts.remove("Constitution")
 
-with open("section_titles.txt", 'r') as f:
+with open(os.path.join(present_dir, "section_titles.txt"), 'r') as f:
     statutes = f.read()
 statutes = statutes.split("\n")
 

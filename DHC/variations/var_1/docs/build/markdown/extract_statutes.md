@@ -3,7 +3,7 @@
 extract_statutes.py: Extract statutes from documents.
 
 
-### extract_statutes.check_exists(actsec: set, statutes: dict)
+### extract_statutes.check_exists(actsec, statutes)
 Return valid cited statutes.
 
 actsec
@@ -19,7 +19,13 @@ cleaned
     Valid set of statutes and their spans.
 
 
-### extract_statutes.clean(act_sec: set)
+* **Return type**
+
+    `set`
+
+
+
+### extract_statutes.clean(act_sec)
 Clean up given set of extracted sections to standard format.
 
 actsec
@@ -31,7 +37,13 @@ actsec
     Set containing formatted statutes and their spans.
 
 
-### extract_statutes.extract_statutes(text: Union[str, dict], per_sentence: bool = True)
+* **Return type**
+
+    `set`
+
+
+
+### extract_statutes.extract_statutes(text, per_sentence=True)
 Finds all statutes mentioned in the given text.
 
 text
@@ -48,7 +60,13 @@ secs
     Dictionary of cited statutes.
 
 
-### extract_statutes.get_statutes(text: str, actlist: list, unit: str)
+* **Return type**
+
+    `dict`
+
+
+
+### extract_statutes.get_statutes(text, actlist, unit)
 Find all statutes cited in text.
 
 text
@@ -68,9 +86,15 @@ actsec
     Set containing cited statutes and spans.
 
 
+* **Return type**
+
+    `set`
+
+
+
 ### extract_statutes.main()
 
-### extract_statutes.sentence_align(sentence_dict: dict, orig: dict)
+### extract_statutes.sentence_align(sentence_dict, orig)
 Align citations to sentences.
 
 sentence_dict
@@ -84,3 +108,8 @@ orig
 orig
 
     Dictionary with sections given for each sentence.
+
+
+* **Return type**
+
+    `dict`

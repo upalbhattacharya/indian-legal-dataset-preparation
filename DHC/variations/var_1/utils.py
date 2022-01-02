@@ -1,8 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""
-utils.py: Utilities for processing
+"""utils.py: Utilities for processing
 """
 
 import logging

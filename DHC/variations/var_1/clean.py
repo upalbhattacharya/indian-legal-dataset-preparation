@@ -1,11 +1,11 @@
 #!/home/workboots/workEnv/bin/python3
 # -*- coding: utf-8 -*-
 
-"""
-initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
+"""initial_clean.py: Remove extra whitespaces, non-utf-8 characters and carry
 out substitutions.
 """
 
+import os
 import re
 from string import punctuation
 
@@ -15,8 +15,10 @@ __licencse__ = ""
 __version__ = ""
 __email__ = "upal.bhattacharya@gmail.com"
 
+# To avoid issues with Sphinx
+present_dir = os.path.dirname(__file__)
 # For substitutions
-with open("act_titles.txt", 'r') as f:
+with open(os.path.join(present_dir, "act_titles.txt"), 'r') as f:
     acts = f.read()
 acts = acts.split("\n")
 acts.remove("Constitution")
@@ -156,5 +158,5 @@ if __name__ == "__main__":
     import logging
     import os
 
-    from utils import set_logger, get_text, save_format
+    from utils import get_text, save_format, set_logger
     main()

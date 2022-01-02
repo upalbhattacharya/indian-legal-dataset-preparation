@@ -1,11 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
-"""extract_statutes.py: Extract statutes from documents.
-
-__author__ = "Upal Bhattacharya"
-__copyright__ = ""
-__licencse__ = ""
-__version__ = "1.0"
-__email__ = "upal.bhattacharya@gmail.com"
+# -*- coding: utf-8 -*-
+"""
+extract_statutes.py: Extract statutes from documents.
 """
 
 import logging
@@ -14,6 +10,12 @@ from collections import defaultdict
 from itertools import groupby
 from operator import itemgetter
 from typing import Union
+
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__licencse__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
 
 # Getting the set of statutes
 with open("act_titles.txt", 'r') as f:
@@ -29,8 +31,6 @@ statutes = {k: k for k in statutes}
 
 
 def get_statutes(text: str, actlist: list, unit: str) -> set:
-    """Find single all statutes cited in the provided text."""
-
     """Find all statutes cited in text.
 
     Parameters
@@ -93,8 +93,6 @@ def get_statutes(text: str, actlist: list, unit: str) -> set:
 
 
 def clean(act_sec: set) -> set:
-    """Clean up given set of extracted sections to standard format."""
-
     """Clean up given set of extracted sections to standard format.
 
     Parameters

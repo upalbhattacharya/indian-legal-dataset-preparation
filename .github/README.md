@@ -1,1 +1,1 @@
-../index.md
+../docs/_build/markdown/index.md

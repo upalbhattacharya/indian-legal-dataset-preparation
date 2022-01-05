@@ -1,4 +1,7 @@
 #!/home/workboots/workEnv/bin/python3
+# -*- encoding: utf8 -*-
+# Last Modified: Wed Jan 05, 2022  01:53PM
+
 """Common utilities.
 """
 
@@ -88,3 +91,24 @@ def update_dict(d, names_list, fl):
         else:
             d[name].append(fl)
     return d
+
+
+def order(dict_obj: dict) -> dict:
+    """Order dictionary in decreasing order of values
+
+    Parameters
+    ----------
+    dict_obj : dict
+        Dictionary to be sorted.
+
+    Returns
+    -------
+    dict
+
+    """
+
+    ordered_dict = {
+            k: v for k, v in sorted(dict_obj.items(),
+                                    key=lambda x: x[1],
+                                    reverse=True)}
+    return ordered_dict

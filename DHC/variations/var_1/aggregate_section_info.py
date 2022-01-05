@@ -1,6 +1,6 @@
 #!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- coding: utf-8 -*-
-# Last Modified: Wed Jan 05, 2022  12:02PM
+# Last Modified: Wed Jan 05, 2022  01:59PM
 
 """
 Find aggregated section and act information of a provided set of cases from
@@ -9,10 +9,11 @@ per-sentence information.
 
 import argparse
 import json
+import logging
 import os
 from collections import Counter
 
-from utils import order
+from utils import order, set_logger
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
@@ -79,10 +80,12 @@ def main():
                         help="Path to save generated data.")
 
     args = parser.parse_args()
+    set_logger(os.path.join(args.output_path, "aggregate_section_info.log"))
 
     agg_info = {}
 
     for fl in os.listdir(args.input_path):
+        logging.info(f"Get statute information from {fl}.")
         with open(os.path.join(args.input_path, fl), 'r') as f:
             doc = json.load(f)
         secs = [sec for sent in doc.values()
@@ -92,7 +95,6 @@ def main():
 
     act_freq = get_distbn(agg_info, "acts")
     sec_freq = get_distbn(agg_info, "sections")
-    
     with open(os.path.join(args.output_path, "case_statute_info.json"),
               'w') as f:
         json.dump(agg_info, f, indent=4)

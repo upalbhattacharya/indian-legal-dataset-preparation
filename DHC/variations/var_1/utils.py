@@ -73,3 +73,24 @@ def save_format(path, flname, data):
     if (type(data) == dict):
         with open(os.path.join(path, f"{flname}.json"), 'w') as f:
             json.dump(data, f, indent=4)
+
+
+def order(dict_obj: dict) -> dict:
+    """Order dictionary in decreasing order of values
+
+    Parameters
+    ----------
+    dict_obj : dict
+        Dictionary to be sorted.
+
+    Returns
+    -------
+    dict
+
+    """
+
+    ordered_dict = {
+            k: v for k, v in sorted(dict_obj.items(),
+                                    key=lambda x: x[1],
+                                    reverse=True)}
+    return ordered_dict

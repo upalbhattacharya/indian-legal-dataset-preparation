@@ -1,7 +1,7 @@
-DHC.common.utils
-================
+DHC.common.make\_html\_table
+============================
 
-.. automodule:: DHC.common.utils
+.. automodule:: DHC.common.make_html_table
   
    
    
@@ -14,11 +14,7 @@ DHC.common.utils
    .. autosummary::
       :toctree:                                          
    
-      clean_names
-      order
-      set_logger
-      time_logger
-      update_dict
+      main
    
    
 

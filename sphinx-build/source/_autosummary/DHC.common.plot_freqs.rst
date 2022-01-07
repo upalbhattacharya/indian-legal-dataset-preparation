@@ -1,7 +1,7 @@
-DHC.common.utils
-================
+DHC.common.plot\_freqs
+======================
 
-.. automodule:: DHC.common.utils
+.. automodule:: DHC.common.plot_freqs
   
    
    
@@ -14,11 +14,7 @@ DHC.common.utils
    .. autosummary::
       :toctree:                                          
    
-      clean_names
-      order
-      set_logger
-      time_logger
-      update_dict
+      main
    
    
 

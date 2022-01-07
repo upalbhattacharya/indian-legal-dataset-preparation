@@ -15,6 +15,7 @@ DHC.common.utils
       :toctree:                                          
    
       clean_names
+      order
       set_logger
       time_logger
       update_dict

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DHC.common.utils &mdash; Dataset Preparation  documentation</title>
+  <title>DHC.common.utils.order &mdash; Dataset Preparation  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="DHC.common.utils.clean_names" href="DHC.common.utils.clean_names.html" />
-    <link rel="prev" title="DHC.common.plot_freqs.main" href="DHC.common.plot_freqs.main.html" /> 
+    <link rel="next" title="DHC.common.utils.set_logger" href="DHC.common.utils.set_logger.html" />
+    <link rel="prev" title="DHC.common.utils.clean_names" href="DHC.common.utils.clean_names.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,9 +41,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="DHC.common.html">DHC.common</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="DHC.common.make_html_table.html">DHC.common.make_html_table</a></li>
 <li class="toctree-l2"><a class="reference internal" href="DHC.common.plot_freqs.html">DHC.common.plot_freqs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">DHC.common.utils</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="DHC.common.utils.html">DHC.common.utils</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="DHC.common.utils.clean_names.html">DHC.common.utils.clean_names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DHC.common.utils.order.html">DHC.common.utils.order</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DHC.common.utils.order</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DHC.common.utils.set_logger.html">DHC.common.utils.set_logger</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DHC.common.utils.time_logger.html">DHC.common.utils.time_logger</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DHC.common.utils.update_dict.html">DHC.common.utils.update_dict</a></li>
@@ -69,9 +69,10 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="DHC.common.html">DHC.common</a> &raquo;</li>
-      <li>DHC.common.utils</li>
+          <li><a href="DHC.common.utils.html">DHC.common.utils</a> &raquo;</li>
+      <li>DHC.common.utils.order</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/_autosummary/DHC.common.utils.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/_autosummary/DHC.common.utils.order.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,41 +80,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-DHC.common.utils">
-<span id="dhc-common-utils"></span><h1>DHC.common.utils<a class="headerlink" href="#module-DHC.common.utils" title="Permalink to this headline"></a></h1>
-<p>Common utilities.</p>
-<p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="DHC.common.utils.clean_names.html#DHC.common.utils.clean_names" title="DHC.common.utils.clean_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_names</span></code></a>(adv_list)</p></td>
-<td><p>Takes a list of advocate names, a dictionary of advocates with their assigned cases and a case text and adds the case to the appropriate advocate with the right prefix for petitioner or respondent</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="DHC.common.utils.order.html#DHC.common.utils.order" title="DHC.common.utils.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a>(dict_obj)</p></td>
-<td><p>Order dictionary in decreasing order of values</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="DHC.common.utils.set_logger.html#DHC.common.utils.set_logger" title="DHC.common.utils.set_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_logger</span></code></a>(log_path)</p></td>
-<td><p>Set logger to log information to the terminal and the specified path.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="DHC.common.utils.time_logger.html#DHC.common.utils.time_logger" title="DHC.common.utils.time_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">time_logger</span></code></a>(original_func)</p></td>
-<td><p>Time logging for method.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="DHC.common.utils.update_dict.html#DHC.common.utils.update_dict" title="DHC.common.utils.update_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_dict</span></code></a>(d, names_list, fl)</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
+  <section id="dhc-common-utils-order">
+<h1>DHC.common.utils.order<a class="headerlink" href="#dhc-common-utils-order" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="DHC.common.utils.order">
+<span class="sig-prename descclassname"><span class="pre">DHC.common.utils.</span></span><span class="sig-name descname"><span class="pre">order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#DHC.common.utils.order" title="Permalink to this definition"></a></dt>
+<dd><p>Order dictionary in decreasing order of values</p>
+<dl class="simple">
+<dt>dict_obj<span class="classifier">dict</span></dt><dd><p>Dictionary to be sorted.</p>
+</dd>
+</dl>
+<p>dict</p>
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="DHC.common.plot_freqs.main.html" class="btn btn-neutral float-left" title="DHC.common.plot_freqs.main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="DHC.common.utils.clean_names.html" class="btn btn-neutral float-right" title="DHC.common.utils.clean_names" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="DHC.common.utils.clean_names.html" class="btn btn-neutral float-left" title="DHC.common.utils.clean_names" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="DHC.common.utils.set_logger.html" class="btn btn-neutral float-right" title="DHC.common.utils.set_logger" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

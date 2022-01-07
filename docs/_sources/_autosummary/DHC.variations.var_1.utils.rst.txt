@@ -15,6 +15,7 @@ DHC.variations.var\_1.utils
       :toctree:                                          
    
       get_text
+      order
       save_format
       set_logger
    

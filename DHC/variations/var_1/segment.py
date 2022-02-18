@@ -1,5 +1,7 @@
-#!/home/workboots/workEnv/bin/python3
+#!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- coding: utf-8 -*-
+# Birth: 2021-12-28 11:22:20.294643339 +0530
+# Modify: 2022-02-15 14:59:58.251538143 +0530
 
 """Segments documents into sentences.
 """
@@ -43,6 +45,7 @@ def custom_sentencizer(doc: str) -> object:
         #  if token.text[0] == "." or token.text[-1] == ".":
 
         if token.text[-1] == ".":
+
             if (not doc[i+1].text[0].isupper() or doc[i+2].text[-1] == '.'):
                 doc[i+1].is_sent_start = False
 
@@ -52,7 +55,11 @@ def custom_sentencizer(doc: str) -> object:
             if (token.text == '.'):
                 doc[i+1].is_sent_start = False
 
+            if (doc[i].is_sent_start is True):
+                doc[i+1].is_sent_start = False
+
             doc[i+1].is_sent_start = True
+
     return doc
 
 
@@ -71,11 +78,9 @@ def segment(text: str, nlp) -> dict:
     sent_dict : dict
         Dictionary containing each sentence and their span.
     """
-    # Disabling elements of the pipeline not required
-
     doc = nlp(text)
 
-    assert doc.has_annotation("SENT_START")
+    #  assert doc.has_annotation("SENT_START")
 
     sent_dict = defaultdict(lambda: dict())
 

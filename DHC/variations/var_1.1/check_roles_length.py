@@ -1,13 +1,14 @@
 #!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- encoding: utf-8 -*-
 # Birth: 2022-02-20 12:27:53.171207956 +0530
-# Modify: 2022-02-20 12:39:35.424559499 +0530
+# Modify: 2022-02-23 13:57:12.131260216 +0530
 
 """Verify length of rhetorical roles document matches number of sentences."""
 
 import argparse
 import logging
 import os
+import json
 
 from utils import set_logger
 
@@ -30,23 +31,23 @@ def main():
     args = parser.parse_args()
 
     set_logger(os.path.join(args.output_path, "mismatch.log"))
-    for flname in os.listdir(args.input_path):
-        with open(os.path.join(args.input_path, flname), 'r') as f:
-            text = f.read()
-        text = text.split("\n")
-        # Removing empty list elements
-        text = list(filter(lambda x: x != "", text))
+    for filename in os.listdir(args.input_path):
+        with open(os.path.join(args.input_path, filename), 'r') as f:
+            dict_obj = json.load(f)
 
-        with open(os.path.join(args.roles_path, flname), 'r') as f:
+        flname = os.path.splitext(filename)[0]
+
+        with open(os.path.join(args.roles_path, f"{flname}.txt"), 'r') as f:
             roles = f.read()
         roles = roles.split("\n")
         roles = list(filter(lambda x: x != "", roles))
         logging.info(f"Processed {flname}")
 
-        if (len(roles) != len(text)):
+        if (len(roles) != len(dict_obj.keys())):
             with open(os.path.join(args.output_path, "mismatch_roles.txt"),
                       'a') as f:
-                print(f"{flname}, {len(roles)}, {len(text)}", file=f, end="\n")
+                print((f"{flname}, {len(roles)}, "
+                       f"{len(dict_obj.keys())}"), file=f, end="\n")
 
 
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
-#!/home/workboots/workEnv/bin/python3
+#!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- encoding:utf8 -*-
 
 # Birth: 2021-12-28 11:22:20.084643339 +0530
-# Modify: 2022-01-06 09:10:31.754661198 +0530
+# Modify: 2022-05-16 13:21:28.955362035 +0530
 
 """create_splits.py: Create N-Fold cross-validation splits for cases of a
-given list of advocates.
+given list of itemocates.
 """
 
 import argparse
@@ -14,6 +14,7 @@ import logging
 import os
 import pickle
 from pathlib import Path
+from collections import defaultdict
 
 #  import numpy as np
 from sklearn.model_selection import KFold, train_test_split
@@ -23,16 +24,12 @@ from utils import set_logger, time_logger
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
 __licencse__ = ""
-__version__ = ""
+__version__ = "1.1"
 __email__ = "upal.bhattacharya@gmail.com"
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-i", "--input_path",
-                    help="Directory to load required data from.")
-parser.add_argument("-o", "--output_path", default=None,
-                    help="Directory to save splits.")
-parser.add_argument("-n", "--nfold", type=int, default=20,
-                    help="Number of folds.")
+
+def recursive_defaultdict():
+    return defaultdict(recursive_defaultdict)
 
 
 def print_list_overlap(train: list, db: list, test: list, val: list) -> None:
@@ -129,31 +126,44 @@ def save_as_pickle(list_obj: list, path: str, flname: str) -> None:
 
 @time_logger
 def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--case_items_path",
+                        help="Case to item mapping.")
+    parser.add_argument("-i", "--items_cases_path",
+                        help="Item to case mapping.")
+    parser.add_argument("-it", "--items_list_path",
+                        help="Path to items list")
+    parser.add_argument("-o", "--output_path", default=None,
+                        help="Directory to save splits.")
+    parser.add_argument("-n", "--nfold", type=int, default=20,
+                        help="Number of folds.")
+    parser.add_argument("-m", "--min_count", type=int, default=25,
+                        help="Least number of cases for an item.")
+
     args = parser.parse_args()
-    if(args.output_path is None):
-        args.output_path = args.input_path
 
     set_logger(os.path.join(args.output_path, "create_splits.log"))
-    logging.info(f"Loading data from {args.input_path}.")
     logging.info(f"Saving data to {args.output_path}.")
 
-    # Loading the json file with all advocates and their cases
-    with open(os.path.join(args.input_path, "adv_cases.json"), 'r') as f:
-        adv_cases = json.load(f)
+    # Loading the json file with all itemocates and their cases
+    with open(args.items_cases_path, 'r') as f:
+        item_cases = json.load(f)
 
-    with open(os.path.join(args.input_path, "case_advs.json"), 'r') as f:
-        case_advs = json.load(f)
+    with open(args.case_items_path, 'r') as f:
+        case_items = json.load(f)
 
-    with open(os.path.join(args.input_path, "selected_advs.json"), 'r') as f:
-        adv_list = json.load(f)
+    with open(args.items_list_path, 'r') as f:
+        item_list = json.load(f)
 
-    adv_list = list(adv_list.values())
+    item_list = list(item_list.values())
 
     logging.info(f"Creating {args.nfold} cross validation splits.")
 
-    kf = KFold(n_splits=args.nfold, random_state=47)
+    kf = KFold(n_splits=args.nfold, random_state=47, shuffle=True)
 
-    high_count = [{} for _ in range(args.nfold)]
+    #  item_case_split = [defaultdict(lambda: defaultdict(list))
+                       #  for _ in range(args.nfold)]
     db_list = [[] for _ in range(args.nfold)]
     train_list = [[] for _ in range(args.nfold)]
     test_list = [[] for _ in range(args.nfold)]
@@ -161,15 +171,27 @@ def main():
     split_a = [[] for _ in range(args.nfold)]
     split_b = [[] for _ in range(args.nfold)]
 
-    for i in range(args.nfold):
-        high_count[i] = {adv: {"db": [],
-                               "train": [],
-                               "test": [],
-                               "val": []}
-                         for adv in adv_list}
+    item_case_split = [{} for _ in range(args.nfold)]
 
-    for adv in adv_list:
-        cases = adv_cases[adv]
+    for i in range(args.nfold):
+        item_case_split[i] = {item: {"db": [],
+                                     "train": [],
+                                     "test": [],
+                                     "val": []}
+                              for item in item_list
+                              if (item_cases.get(item, -1) != -1 and
+                                  len(item_cases[item]) >= args.min_count)}
+
+    for item in item_list:
+        if item_cases.get(item, -1) == -1:
+            logging.info(f"No cases for {item}.")
+            #  item_case_split[i].pop(item, "Does not exist")
+            continue
+        cases = item_cases[item]
+        if len(cases) < args.min_count:
+            logging.info(f"Insufficient cases for {item}.")
+            #  item_case_split[i].pop(item, "Does not exist")
+            continue
 
         for i, (split_a_idx, split_b_idx) in enumerate(
                 kf.split(cases)):
@@ -190,7 +212,11 @@ def main():
 
             # TODO Fix train size percentage to be automatically calculated
             train, db = train_test_split(extend_a, train_size=0.5556)
-            test, val = train_test_split(extend_b, train_size=0.5)
+            if len(extend_b) < 2:
+                test = extend_b
+                val = []
+            else:
+                test, val = train_test_split(extend_b, train_size=0.5)
 
             _, _, train_list[i], db = remove_overlap([], [], train_list[i],
                                                      db, least=9)
@@ -206,34 +232,32 @@ def main():
             test_list[i].extend(test)
             val_list[i].extend(val)
 
-    for case, advs in case_advs.items():
+    item_list = list(item_case_split[0].keys())
+
+    for case, items in case_items.items():
         logging.info(f"Assigning case {case} to the correct segments.")
         for i in range(args.nfold):
             if (case in train_list[i]):
-                _ = [high_count[i][adv]["train"].append(case)
-                     for adv in advs if adv in adv_list]
+                _ = [item_case_split[i][item]["train"].append(case)
+                     for item in items if item in item_list]
 
             elif (case in db_list[i]):
-                _ = [high_count[i][adv]["db"].append(case)
-                     for adv in advs if adv in adv_list]
+                _ = [item_case_split[i][item]["db"].append(case)
+                     for item in items if item in item_list]
 
             elif (case in test_list[i]):
-                _ = [high_count[i][adv]["test"].append(case)
-                     for adv in advs if adv in adv_list]
+                _ = [item_case_split[i][item]["test"].append(case)
+                     for item in items if item in item_list]
 
             else:
-                _ = [high_count[i][adv]["val"].append(case)
-                     for adv in advs if adv in adv_list]
+                _ = [item_case_split[i][item]["val"].append(case)
+                     for item in items if item in item_list]
 
     output_path = os.path.join(args.output_path,
                                Path(f"cross_val/{args.nfold}_fold/"))
 
     if not(os.path.exists(output_path)):
         os.makedirs(output_path)
-
-    #  with open(os.path.join(output_path, "adv_list.csv"), 'w') as f:
-        #  wr = csv.writer(f, delimiter='\n')
-        #  wr.writerow(adv_list)
 
     for i in range(args.nfold):
         total_cases = (len(train_list[i]) + len(test_list[i])
@@ -252,14 +276,14 @@ def main():
             logging.info(f"Making directory/directories {fold_path}")
             os.makedirs(fold_path)
 
-        save_as_pickle(train_list[i], fold_path, "train.pkl")
-        save_as_pickle(db_list[i], fold_path, "db.pkl")
-        save_as_pickle(test_list[i], fold_path, "test.pkl")
-        save_as_pickle(val_list[i], fold_path, "val.pkl")
+        #  save_as_pickle(train_list[i], fold_path, "train.pkl")
+        #  save_as_pickle(db_list[i], fold_path, "db.pkl")
+        #  save_as_pickle(test_list[i], fold_path, "test.pkl")
+        #  save_as_pickle(val_list[i], fold_path, "val.pkl")
 
-        with open(os.path.join(fold_path, "adv_case_splits.json"),
+        with open(os.path.join(fold_path, "item_case_splits.json"),
                   'w+') as f:
-            json.dump(high_count[i], f, indent=4)
+            json.dump(item_case_split[i], f, indent=4)
 
 
 if __name__ == "__main__":

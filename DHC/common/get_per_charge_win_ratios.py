@@ -11,14 +11,24 @@ import json
 import os
 from collections import defaultdict
 
+import numpy as np
 
-def avg_win_ratio(case_list: list, scores: dict) -> float:
-    """Compute average win-ratio from a given list of cases.
+__author__ = "Upal Bhattacharya"
+__copyright__ = ""
+__license__ = ""
+__version__ = "1.0"
+__email__ = "upal.bhattacharya@gmail.com"
+
+
+def avg_win_ratio(p_cases: set, d_cases: set, scores: dict) -> float:
+    """Compute average win-ratio of one advocate from a given list of cases.
 
     Parameters
     ----------
-    case_list: list
-        List of cases.
+    p_cases: set
+        Set of cases where advocate was petitioner.
+    d_cases: set
+        Set of cases where advocate was defendant.
     scores: dict
         Dictionary with case decisions.
 
@@ -27,7 +37,13 @@ def avg_win_ratio(case_list: list, scores: dict) -> float:
     ratio: float
         Computed win_ratio.
     """
-    return ((sum([scores[case] for case in case_list]) * 1./len(case_list))
+    case_list = list(p_cases.union(d_cases))
+    won_p = (np.array([scores[case] for case in case_list]) *
+             np.array([case in p_cases for case in case_list]))
+    won_d = (np.array([1 - scores[case] for case in case_list]) *
+             np.array([case in d_cases for case in case_list]))
+
+    return ((sum(won_p + won_d) * 1./len(case_list))
             if len(case_list) != 0 else 0.0)
 
 
@@ -44,6 +60,9 @@ def main():
                         help="Path to cases of each charge json.")
     parser.add_argument("--advocate_cases",
                         help="Path to advocate cases json.")
+    parser.add_argument("--petitioner_defendant_info",
+                        help=("Path to dictionary containing petitioner and "
+                              "defendant cases of each advocate json."))
     parser.add_argument("--output_path",
                         help="Path to save generated scores.")
 
@@ -70,12 +89,21 @@ def main():
     with open(args.case_decisions, 'r') as f:
         case_decisions = json.load(f)
 
+    # Get advocate petitioner and advocate cases
+    with open(args.petitioner_defendant_info, 'r') as f:
+        p_d_info = json.load(f)
+
     charge_adv_win_ratios = defaultdict(lambda: dict())
     for charge in charges:
         for adv in advs.values():
             case_list = set(adv_cases[adv]).intersection(
                         set(charge_cases[charge]))
-            charge_adv_win_ratios[charge][adv] = avg_win_ratio(case_list,
+            p_cases = case_list.intersection(
+                                        set(p_d_info[adv]["Petitioner"]))
+            d_cases = case_list.intersection(
+                                        set(p_d_info[adv]["Defendant"]))
+            charge_adv_win_ratios[charge][adv] = avg_win_ratio(p_cases,
+                                                               d_cases,
                                                                case_decisions)
         # Order by score
         charge_adv_win_ratios[charge] = {

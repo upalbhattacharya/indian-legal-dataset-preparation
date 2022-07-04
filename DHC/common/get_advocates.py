@@ -12,7 +12,7 @@ from difflib import get_close_matches
 
 from bs4 import BeautifulSoup
 
-from utils import set_logger, time_logger, clean_names, update_dict
+from utils import set_logger, clean_names, update_dict
 
 __author__ = "Upal Bhattacharya"
 __copyright__ = ""
@@ -27,7 +27,6 @@ parser.add_argument("-o", "--output_path",
                     help="Path to save data.")
 
 
-@time_logger
 def main():
 
     args = parser.parse_args()

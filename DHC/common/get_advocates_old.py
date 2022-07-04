@@ -1,8 +1,4 @@
-#!/home/workboots/VirtualEnvs/aiml/bin/python3
-# -*- encoding: utf-8 -*-
-# Birth: 2022-07-04 17:13:03.696110411 +0530
-# Modify: 2022-07-04 17:30:59.277673606 +0530
-
+#!/home/workboots/workEnv/bin/python3
 """
 Finds names of advocates in a given set of files and creates an advocate-case
 mapping.
@@ -11,7 +7,7 @@ import argparse
 import json
 import logging
 import os
-import regex as re
+import re
 from difflib import get_close_matches
 
 from bs4 import BeautifulSoup
@@ -37,14 +33,12 @@ def main():
     set_logger(os.path.join(args.output_path, "get_advocates.log"))
 
     # Regex to extract names
-    regex = r'(?:D|M)(?:r|s|rs)\.\s*[A-Za-z.]+\s+[A-Za-z.]+(?:\s*[A-Za-z]+)?,?'
+    regex = r'(?:D|M)(?:r|s|rs)\.\s*[A-Za-z.]+\s+[A-Za-z.]+(?:\s+[A-Za-z]+)?,?'
 
     # Terms to be used to split the text into sections for petitioner and
     # plaintiff extraction
     petitioner_terms = ['Petitioner', 'Apellant', 'Appellant', 'Plaintiff']
     respondent_terms = ['Respondent']
-    petitioner_term_regex = "|".join(petitioner_terms)
-    respondent_term_regex = "|".join(respondent_terms)
 
     adv_cases = {}
     pet_cases = {}
@@ -81,39 +75,17 @@ def main():
                 # does not exist
                 continue
 
+        # Splitting the text to search through for Petitioners
+        unique_combinations = [(pet, res)
+                               for res in respondent_terms
+                               for pet in petitioner_terms]
+
         # For getting the text containing petitioners' advocates
-        petitioner_text = set()
-        respondent_text = set()
+        petitioner_text = ""
 
-        # Works with petitioners. Best to extract respondents as set difference
-        petitioner_regex = (rf"(?<={petitioner_term_regex}s?)(?P<pet>.*?)"
-                            rf"versus.*?(?={respondent_term_regex}s?)"
-                            rf"(?P<res>.*?)")
-        r = re.compile(petitioner_regex, flags=re.I | re.DOTALL)
-        segs = [m.groupdict() for m in r.finditer(filtered)]
-        for el in segs:
-            for k, v in el.items():
-                if k == 'res':
-                    respondent_text.update([v])
-                else:
-                    petitioner_text.update([v])
-
-        # Alternate pattern
-        petitioner_regex_alt = (rf"(?<=For the {petitioner_term_regex}s?)"
-                                rf"(?P<pet>.*?)"
-                                rf"(?=For the {respondent_term_regex}s?)"
-                                rf"(?P<res>.*?)")
-        r_alt = re.compile(petitioner_regex_alt, flags=re.I | re.DOTALL)
-        segs = [m.groupdict() for m in r_alt.finditer(filtered)]
-        for el in segs:
-            for k, v in el.items():
-                if k == 'res':
-                    respondent_text.update([v])
-                else:
-                    petitioner_text.update([v])
-
-        # Pruning
-        petitioner_text = " ".join(petitioner_text)
+        for pet, res in unique_combinations:  # TODO fix petitioner extraction
+            petitioner_text = (petitioner_text + " ".join(re.findall(
+                pet+r's?(.+?)'+res+r's?', filtered, re.I))).strip()
 
         # Using regexes to find all names for a particular case
         all_names = re.findall(regex, filtered)
@@ -133,9 +105,8 @@ def main():
         # Running the clean_names(...) method first for petitioners and then
         # for respondents
         petitioners = clean_names(petitioners)
-        respondents = clean_names(respondents, check=petitioners)
+        respondents = clean_names(respondents)
 
-        logging.info(f"Found advocates: {clean_names(all_names)}.")
         logging.info(f"Found petitioners: {petitioners}.")
         logging.info(f"Found respondents: {respondents}.")
 
@@ -234,16 +205,16 @@ def main():
     logging.info(f"{sum(list(adv_cases_len.values()))} cases were found.")
 
     # Saving the data
-    with open(os.path.join(args.output_path, "adv_cases_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path, "adv_cases.json"), 'w+') as f:
         json.dump(adv_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "pet_cases_new.json"), 'w+') as f:
-        json.dump(pet_cases, f, indent=4)
+    #  with open(os.path.join(args.output_path, "pet_cases.json"), 'w+') as f:
+        #  json.dump(pet_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "res_cases_new.json"), 'w+') as f:
-        json.dump(res_cases, f, indent=4)
+    #  with open(os.path.join(args.output_path, "res_cases.json"), 'w+') as f:
+        #  json.dump(res_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "adv_cases_num_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path, "adv_cases_num.json"), 'w+') as f:
         json.dump(adv_cases_len, f, indent=4)
 
 

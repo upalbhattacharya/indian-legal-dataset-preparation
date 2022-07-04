@@ -59,13 +59,14 @@ def set_logger(log_path):
         logger.addHandler(stream_handler)
 
 
-def clean_names(adv_list):
+def clean_names(adv_list, check=None):
     """Takes a list of advocate names, a dictionary of advocates with their
     assigned cases and a case text and adds the case to the appropriate
     advocate with the right prefix for petitioner or respondent
     """
 
     salutations = ['Mr', 'Ms', 'Mrs', 'Dr', 'Mr.', 'Mrs.', 'Ms.', 'Dr.']
+    except_tokens = ["For", "CORAM", "Hon'ble", "Advocate", "Advocates"]
     cleaned_advs = []
 
     for adv in adv_list:
@@ -75,11 +76,15 @@ def clean_names(adv_list):
 
         # Using replace instead of strip due to abbreviated names with
         adv = [token for token in adv
-               if token[0].isupper() and token not in salutations]
+               if token[0].isupper() and token not in salutations
+               and token not in except_tokens]
 
         if(len(adv) <= 1):
             continue
         cleaned_advs.append("".join(adv))
+
+    if check is not None:
+        return list(set([adv for adv in cleaned_advs if adv not in check]))
 
     return list(set(cleaned_advs))
 

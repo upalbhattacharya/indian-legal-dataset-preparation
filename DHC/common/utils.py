@@ -92,8 +92,10 @@ def clean_names(adv_list, check=None):
 def update_dict(d, names_list, fl):
     for name in names_list:
         if(d.get(name, -1) == -1):
+            logging.info(f"Key {name} does not exist.")
             d[name] = [fl, ]
         else:
+            logging.info(f"Adding {fl} to {name}.")
             d[name].append(fl)
     return d
 

@@ -1,4 +1,4 @@
-#!/home/workboots/workEnv/bin/python3
+#!/home/workboots/VirtualEnvs/aiml/bin/python3
 
 """get_case_advocates.py: Maps advocates to cases.
 """
@@ -28,14 +28,14 @@ def main():
     if(args.output_path is None):
         args.output_path = args.input_path
 
-    set_logger(os.path.join(args.output_path, "get_case_advocates.log"))
+    set_logger(os.path.join(args.output_path, "get_case_advocates_new.log"))
 
     logging.info((f"Loading data from {args.input_path} and saving to "
                   f"{args.output_path}."))
 
     case_advs = {}  # For getting the names extracted for a particular case
 
-    with open(os.path.join(args.input_path, 'adv_cases.json'), 'r') as f:
+    with open(os.path.join(args.input_path, 'adv_cases_new.json'), 'r') as f:
         adv_cases = json.load(f)
 
     for adv, cases in adv_cases.items():
@@ -47,7 +47,7 @@ def main():
                 case_advs[case] = []
                 case_advs[case].append(adv)
 
-    with open(os.path.join(args.output_path, 'case_advs.json'), 'w') as f:
+    with open(os.path.join(args.output_path, 'case_advs_new.json'), 'w') as f:
         json.dump(case_advs, f, indent=4)
 
 

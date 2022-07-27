@@ -1,7 +1,7 @@
 #!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- encoding: utf-8 -*-
 # Birth: 2022-07-04 17:13:03.696110411 +0530
-# Modify: 2022-07-04 17:30:59.277673606 +0530
+# Modify: 2022-07-05 13:40:27.869188525 +0530
 
 """
 Finds names of advocates in a given set of files and creates an advocate-case
@@ -144,9 +144,19 @@ def main():
         pet_cases = update_dict(pet_cases, petitioners, flname)
         res_cases = update_dict(res_cases, respondents, flname)
 
+    # Forcefully adding any missed advocates
+    for adv in adv_cases:
+        if pet_cases.get(adv, -1) == -1:
+            pet_cases[adv] = []
+
+        if res_cases.get(adv, -1) == -1:
+            res_cases[adv] = []
+
     i = 0
     advs = list(adv_cases.keys())
     logging.info(f"A total of {len(advs)} advocates were found.")
+    logging.info(f"A total of {len(pet_cases.keys())} petitioners were found.")
+    logging.info(f"A total of {len(res_cases.keys())} respondents were found.")
     logging.info("Removing and merging duplicates.")
 
     # Iterates through the dictionary to find duplicate advocate names
@@ -174,11 +184,13 @@ def main():
             # If one of the matches have already been removed from the
             # dictionary, skip it
             if(adv_cases.get(s_adv, -1) == -1):
+                logging.info(f"{s_adv} not found. Possibly removed.")
                 continue
 
             # Merge two advocates if they have overlaps
             if (set(adv_cases[shorter]).intersection(
                     set(adv_cases[s_adv])) == set()):
+                logging.info(f"{adv} and {s_adv} have no cases in common.")
                 continue
 
             # Retaining the shorter name
@@ -189,11 +201,13 @@ def main():
                         pet_cases.get(s_adv, -1) != -1):
                     pet_cases[shorter].extend(pet_cases[s_adv])
                     del pet_cases[s_adv]
+                    assert pet_cases.get(s_adv, -1) == -1, "Deleted but found"
 
                 if(res_cases.get(shorter, -1) != -1 and
                         res_cases.get(s_adv, -1) != -1):
                     res_cases[shorter].extend(res_cases[s_adv])
                     del res_cases[s_adv]
+                    assert res_cases.get(s_adv, -1) == -1, "Deleted but found"
 
                 logging.info(f"Merged {s_adv} with {shorter}.")
                 del adv_cases[s_adv]
@@ -205,11 +219,13 @@ def main():
                         pet_cases.get(s_adv, -1) != -1):
                     pet_cases[s_adv].extend(pet_cases[shorter])
                     del pet_cases[shorter]
+                    assert pet_cases.get(shorter, -1) == -1, "Deleted but found"
 
                 if(res_cases.get(shorter, -1) != -1 and
                         res_cases.get(s_adv, -1) != -1):
                     res_cases[s_adv].extend(res_cases[shorter])
                     del res_cases[shorter]
+                    assert pet_cases.get(shorter, -1) == -1, "Deleted but found"
 
                 logging.info(f"Merged {shorter} with {s_adv}.")
                 del adv_cases[shorter]
@@ -230,6 +246,14 @@ def main():
                                                   key=lambda x: len(x[1]),
                                                   reverse=True)}
 
+    pet_cases_len = {k: len(v) for k, v in sorted(pet_cases.items(),
+                                                  key=lambda x: len(x[1]),
+                                                  reverse=True)}
+
+    res_cases_len = {k: len(v) for k, v in sorted(res_cases.items(),
+                                                  key=lambda x: len(x[1]),
+                                                  reverse=True)}
+
     logging.info(f"{len(adv_cases.keys())} cleaned advocate names retained.")
     logging.info(f"{sum(list(adv_cases_len.values()))} cases were found.")
 
@@ -243,8 +267,17 @@ def main():
     with open(os.path.join(args.output_path, "res_cases_new.json"), 'w+') as f:
         json.dump(res_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "adv_cases_num_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path,
+                           "adv_cases_num_new.json"), 'w+') as f:
         json.dump(adv_cases_len, f, indent=4)
+
+    with open(os.path.join(args.output_path,
+                           "pet_cases_num_new.json"), 'w+') as f:
+        json.dump(pet_cases_len, f, indent=4)
+
+    with open(os.path.join(args.output_path,
+                           "res_cases_num_new.json"), 'w+') as f:
+        json.dump(res_cases_len, f, indent=4)
 
 
 if __name__ == "__main__":

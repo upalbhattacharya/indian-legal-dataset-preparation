@@ -20,3 +20,5 @@
 - act_titles.py: List of acts used for extraction of statutes.
 - section_titles.py: List of sections/statutes used for verification of
   extracted statutes.
+- `process.py`: **INEFFICIENT** Applies the pipeline of all processing. VERY
+  SLOW. DO NOT USE.

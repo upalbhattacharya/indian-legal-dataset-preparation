@@ -1,7 +1,7 @@
 #!/home/workboots/VirtualEnvs/aiml/bin/python3
 # -*- encoding: utf-8 -*-
 # Birth: 2022-07-04 17:13:03.696110411 +0530
-# Modify: 2022-07-05 13:40:27.869188525 +0530
+# Modify: 2022-08-15 16:16:15.701661246 +0530
 
 """
 Finds names of advocates in a given set of files and creates an advocate-case
@@ -34,7 +34,7 @@ parser.add_argument("-o", "--output_path",
 def main():
 
     args = parser.parse_args()
-    set_logger(os.path.join(args.output_path, "get_advocates.log"))
+    set_logger(os.path.join(args.output_path, "get_advocates"))
 
     # Regex to extract names
     regex = r'(?:D|M)(?:r|s|rs)\.\s*[A-Za-z.]+\s+[A-Za-z.]+(?:\s*[A-Za-z]+)?,?'
@@ -170,7 +170,7 @@ def main():
 
         # get_close_matches uses gesalt pattern matching
         similar_advs = get_close_matches(
-            adv, advs, n=10, cutoff=0.92)[1:]
+            adv, advs, n=10, cutoff=0.90)[1:]
 
         logging.info(f"Advocates {similar_advs} found similar to {adv}.")
 
@@ -188,10 +188,10 @@ def main():
                 continue
 
             # Merge two advocates if they have overlaps
-            if (set(adv_cases[shorter]).intersection(
-                    set(adv_cases[s_adv])) == set()):
-                logging.info(f"{adv} and {s_adv} have no cases in common.")
-                continue
+            #  if (set(adv_cases[shorter]).intersection(
+                    #  set(adv_cases[s_adv])) == set()):
+                #  logging.info(f"{adv} and {s_adv} have no cases in common.")
+                #  continue
 
             # Retaining the shorter name
             if(len(shorter) <= len(s_adv)):
@@ -255,28 +255,28 @@ def main():
                                                   reverse=True)}
 
     logging.info(f"{len(adv_cases.keys())} cleaned advocate names retained.")
-    logging.info(f"{sum(list(adv_cases_len.values()))} cases were found.")
+    logging.info(f"{sum(set(adv_cases_len.values()))} cases were found.")
 
     # Saving the data
-    with open(os.path.join(args.output_path, "adv_cases_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path, "adv_cases.json"), 'w+') as f:
         json.dump(adv_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "pet_cases_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path, "pet_cases.json"), 'w+') as f:
         json.dump(pet_cases, f, indent=4)
 
-    with open(os.path.join(args.output_path, "res_cases_new.json"), 'w+') as f:
+    with open(os.path.join(args.output_path, "res_cases.json"), 'w+') as f:
         json.dump(res_cases, f, indent=4)
 
     with open(os.path.join(args.output_path,
-                           "adv_cases_num_new.json"), 'w+') as f:
+                           "adv_cases_num.json"), 'w+') as f:
         json.dump(adv_cases_len, f, indent=4)
 
     with open(os.path.join(args.output_path,
-                           "pet_cases_num_new.json"), 'w+') as f:
+                           "pet_cases_num.json"), 'w+') as f:
         json.dump(pet_cases_len, f, indent=4)
 
     with open(os.path.join(args.output_path,
-                           "res_cases_num_new.json"), 'w+') as f:
+                           "res_cases_num.json"), 'w+') as f:
         json.dump(res_cases_len, f, indent=4)
 
 

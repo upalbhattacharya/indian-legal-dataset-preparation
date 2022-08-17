@@ -39,6 +39,9 @@ def set_logger(log_path):
     log_path : str
         Path to log run-stats to.
     """
+    timestamp = time.strftime("%Y-%m-%d-%H-%m-%S")
+
+    log_path = log_path + "_" + timestamp + ".log"
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)

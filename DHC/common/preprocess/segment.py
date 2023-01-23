@@ -1,7 +1,7 @@
-#!/home/workboots/VirtualEnvs/aiml/bin/python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Birth: 2022-08-15 10:52:32.675467926 +0530
-# Modify: 2022-08-16 19:22:19.949992230 +0530
+# Birth: 2022-08-29 23:38:46.163331794 +0530
+# Modify: 2022-08-29 23:38:46.187331926 +0530
 
 """Segments documents into sentences.
 """
@@ -44,13 +44,23 @@ def custom_sentencizer(doc: str) -> object:
     # Exception tokens
     exceptions = ["mr.", "ms.", "mrs.", "adv.", "advs.", "sr.",
                   "dr.", "m.", "crl.", "a.", "advocate.", "advocates.",
-                  "w.", "p.", "fir.", "ltd."]
+                  "w.", "p.", "fir.", "ltd.", "[CARDINAL]."]
 
     # The last token cannot start a sentence
     for i, token in enumerate(doc[:-2]):
         #  if token.text[0] == "." or token.text[-1] == ".":
 
+        if "CARDINAL" in token.text:
+            if doc[i+1].text == "]" and doc[i+2].text == ".":
+                doc[i+1].is_sent_start = False
+                doc[i+2].is_sent_start = False
+                doc[i+2].is_sent_start = False
+            continue
+
         if token.text[-1] == "." or token.text[-1] == ":":
+
+            if doc[i-1].text == "]" and doc[i-2].text == "CARDINAL":
+                continue
 
             doc[i+1].is_sent_start = True
 
@@ -88,14 +98,18 @@ def segment(text: str, nlp) -> dict:
     doc = nlp(text)
 
     sent_dict = defaultdict(lambda: dict())
-
-    for i, sent in enumerate(doc.sents):
-        start = sent.start_char
-        end = sent.end_char
-        sent_dict[i] = {
-            "span": tuple((start, end)),
-            "text": sent.text,
-        }
+    try:
+        for i, sent in enumerate(doc.sents):
+            start = sent.start_char
+            end = sent.end_char
+            sent_dict[i] = {
+                "span": tuple((start, end)),
+                "text": sent.text,
+            }
+    except ValueError as e:
+        logging.info(str(repr(e)))
+        logging.info("Could not detect sentence boundaries. Skipping")
+        return {}
 
     sent_dict = fix_sentence_boundaries(sent_dict)
     return sent_dict
@@ -139,10 +153,14 @@ def main():
                         help="Path to load data from.")
     parser.add_argument("-o", "--output_path",
                         help="Path to save generated data.")
+    parser.add_argument("-l", "--log_path", type=str, default=None,
+                        help="Path to save generated logs")
 
     args = parser.parse_args()
+    if args.log_path is None:
+        args.log_path = args.output_path
 
-    set_logger(os.path.join(args.output_path, "segment"))
+    set_logger(os.path.join(args.log_path, "segment"))
 
     nlp = spacy.blank('en')
     # Adding the sentencizer to the pipeline
@@ -156,6 +174,8 @@ def main():
         if len(text) > nlp.max_length:
             text = text[:nlp.max_length]
         text = segment(text, nlp)
+        if text == {}:
+            continue
 
         logging.info(f"Segmented sentences for {fl}")
 

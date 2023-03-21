@@ -18,6 +18,8 @@ def main():
                         help="Path to json file with advocate cases")
     parser.add_argument("-s", "--selected_cases", default=None,
                         help="List of cases to consider")
+    parser.add_argument("-m", "--max", type=int, default=None,
+                        help="Maximum number of cases to consider advocate")
     parser.add_argument("-n", "--num", type=int, default=100,
                         help="Least number of cases to consider advocate")
     parser.add_argument("-p", "--petitioner_cases",
@@ -62,7 +64,11 @@ def main():
     adv_nums = {k: len(v) for k, v in adv_cases.items()}
 
     # Select advocates
-    advs = [adv for adv, num in adv_nums.items() if num >= args.num]
+    if args.max is None:
+        advs = [adv for adv, num in adv_nums.items() if num >= args.num]
+    else:
+        advs = [adv for adv, num in adv_nums.items()
+                if num >= args.num and num <= args.max]
     logging.info(f"{len(advs)} advocates were selected")
     logging.info(f"Selected advocates are: {advs}")
 

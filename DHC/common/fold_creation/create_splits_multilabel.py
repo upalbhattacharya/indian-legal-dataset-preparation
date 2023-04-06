@@ -1,16 +1,19 @@
 #!/usr/bin/env python
-# Birth: 2023-03-23 10:59:53.571586426 +0530
-# Modify: 2023-03-28 12:02:21.146340679 +0530
+# Birth: 2023-03-28 15:27:09.205409913 +0530
+# Modify: 2023-03-28 15:27:09.237410796 +0530
 
 """Create train, test, validation splits along with cross-validation
 variants."""
 
 import argparse
+import json
 import logging
 import os
 import random
+from itertools import chain
 
-from sklearn.model_selection import KFold, train_test_split
+from sklearn.preprocessing import MultiLabelBinarizer
+from skmultilearn.model_selection import IterativeStratification
 
 from utils import set_logger
 
@@ -38,6 +41,8 @@ def main():
 
     parser.add_argument("--input", type=str,
                         help="Path to file with total list of items")
+    parser.add_argument("--targets", type=str,
+                        help="Path to targets to use for balanced splits")
     parser.add_argument("--folds", type=int, default=5,
                         help="Number of folds for cross-validation")
     parser.add_argument("--train_size", type=float, default=0.7,
@@ -68,55 +73,98 @@ def main():
     # Redefining validation split value with respect to train_size
     data_size = len(data)
 
+    # Load targets
+    with open(args.targets, 'r') as f:
+        targets = json.load(f)
+
+    data = list(set(data).intersection(set(targets)))
+    target_classes = list(set(chain.from_iterable(targets.values())))
+
+    # Binarizing labels
+    mlb = MultiLabelBinarizer()
+
+    data_targets = [set(v) for k, v in targets.items() if k in data]
+    y_binarized = mlb.fit_transform(data_targets)
+
     # For Single Fold
     if args.folds == 1:
-        train, test = train_test_split(
-                data,
-                test_size=args.test_size,
-                train_size=args.train_size + args.val_size,
-                shuffle=True)
-        val = []
+        stratifier = IterativeStratification(
+                n_splits=1,
+                order=2,
+                sample_distribution_per_fold=[args.test_size,
+                                              args.train_size+args.val_size])
+
+        train_idx, test_idx = next(stratifier.split(data, y_binarized))
+        data_train = [data[idx] for idx in train_idx]
+        data_test = [data[idx] for idx in test_idx]
+
+        targets_train = y_binarized[train_idx, :]
+        targets_test = y_binarized[test_idx, :]
+
         if args.val_size != 0.0:
             args.val_size = (data_size * args.val_size *
                              1./(data_size *
                                  (args.train_size + args.val_size)))
-            train, val = train_test_split(
-                    train,
-                    test_size=args.val_size,
-                    shuffle=False)
+            stratifier = IterativeStratification(
+                    n_splits=1,
+                    order=2,
+                    sample_distribution_per_fold=[args.val_size,
+                                                  args.train_size])
+            train_idx, val_idx = next(stratifier.split(
+                                            data_train, targets_train))
+            data_train = [data_train[idx] for idx in train_idx]
+            data_val = [data_train[idx] for idx in val_idx]
+
+            targets_train = targets_train[train_idx, :]
+            targets_val = targets_train[val_idx, :]
 
         # Save data
         save_data(
                 path=args.output_path,
-                train=train,
-                test=test,
-                val=val,
+                train=data_train,
+                test=data_test,
+                val=data_val,
                 fold=0)
 
     else:
-        kf = KFold(
+        stratifier = IterativeStratification(
                 n_splits=args.folds,
-                shuffle=False)
+                order=2,
+                sample_distribution_per_fold=[args.test_size,
+                                              args.train_size+args.val_size])
         args.test_size = 1./args.folds
         args.train_size = 1.0 - args.test_size - args.val_size
         args.val_size = (data_size * args.val_size *
                          1./(data_size *
                              (args.train_size + args.val_size)))
-        for i, (train_idx, test_idx) in enumerate(kf.split(data)):
-            train = list(map(lambda x: data[x], train_idx))
-            test = list(map(lambda x: data[x], test_idx))
+
+        for i, (train_idx, test_idx) in enumerate(
+                stratifier.split(data, y_binarized)):
+            data_train = [data_train[idx] for idx in train_idx]
+            data_val = [data_train[idx] for idx in val_idx]
+
+            targets_train = targets_train[train_idx, :]
+            targets_val = targets_train[val_idx, :]
 
             if args.val_size != 0.0:
-                train, val = train_test_split(
-                        train,
-                        test_size=args.val_size,
-                        shuffle=False)
+                val_stratifier = IterativeStratification(
+                        n_splits=1,
+                        order=2,
+                        sample_distribution_per_fold=[args.val_size,
+                                                      args.train_size])
+                train_idx, val_idx = next(val_stratifier.split(
+                                                data_train, targets_train))
+                data_train = [data_train[idx] for idx in train_idx]
+                data_val = [data_train[idx] for idx in val_idx]
+
+                targets_train = targets_train[train_idx, :]
+                targets_val = targets_train[val_idx, :]
 
             save_data(
                     path=args.output_path,
-                    train=train,
-                    test=test,
-                    val=val,
+                    train=data_train,
+                    test=data_test,
+                    val=data_val,
                     fold=i)
 
 

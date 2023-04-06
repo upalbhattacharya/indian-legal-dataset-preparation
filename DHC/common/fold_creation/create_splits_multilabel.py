@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Birth: 2023-03-28 15:27:09.205409913 +0530
-# Modify: 2023-03-28 15:27:09.237410796 +0530
+# Modify: 2023-04-06 15:35:15.134017324 +0530
 
 """Create train, test, validation splits along with cross-validation
 variants."""
@@ -89,7 +89,7 @@ def main():
     # For Single Fold
     if args.folds == 1:
         stratifier = IterativeStratification(
-                n_splits=1,
+                n_splits=2,
                 order=2,
                 sample_distribution_per_fold=[args.test_size,
                                               args.train_size+args.val_size])
@@ -106,7 +106,7 @@ def main():
                              1./(data_size *
                                  (args.train_size + args.val_size)))
             stratifier = IterativeStratification(
-                    n_splits=1,
+                    n_splits=2,
                     order=2,
                     sample_distribution_per_fold=[args.val_size,
                                                   args.train_size])
@@ -148,7 +148,7 @@ def main():
 
             if args.val_size != 0.0:
                 val_stratifier = IterativeStratification(
-                        n_splits=1,
+                        n_splits=2,
                         order=2,
                         sample_distribution_per_fold=[args.val_size,
                                                       args.train_size])

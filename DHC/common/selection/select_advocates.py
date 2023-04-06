@@ -18,6 +18,8 @@ def main():
                         help="Path to json file with advocate cases")
     parser.add_argument("-s", "--selected_cases", default=None,
                         help="List of cases to consider")
+    parser.add_argument("-sa", "--selected_advs", default=None,
+                        help="List of advocates to consider")
     parser.add_argument("-m", "--max", type=int, default=None,
                         help="Maximum number of cases to consider advocate")
     parser.add_argument("-n", "--num", type=int, default=100,
@@ -61,14 +63,23 @@ def main():
         def_cases = {k: list(set(v).intersection(set(selected_cases)))
                      for k, v in def_cases.items()}
 
-    adv_nums = {k: len(v) for k, v in adv_cases.items()}
+    if args.selected_advs is not None:
+        with open(args.selected_advs, 'r') as f:
+            selected_advs = f.readlines()
+        selected_advs = list(filter(None, map(lambda x: x.strip(),
+                                              selected_advs)))
+        adv_nums = {k: len(v) for k, v in adv_cases.items()
+                    if k in selected_advs}
+    else:
+        adv_nums = {k: len(v) for k, v in adv_cases.items()}
 
     # Select advocates
-    if args.max is None:
-        advs = [adv for adv, num in adv_nums.items() if num >= args.num]
-    else:
+    if args.max is not None:
         advs = [adv for adv, num in adv_nums.items()
                 if num >= args.num and num <= args.max]
+    else:
+        advs = [adv for adv, num in adv_nums.items() if num >= args.num]
+
     logging.info(f"{len(advs)} advocates were selected")
     logging.info(f"Selected advocates are: {advs}")
 
@@ -118,8 +129,12 @@ def main():
         json.dump(select_def_cases_nums, f, indent=4)
 
     with open(os.path.join(args.output_dir, "selected_cases.txt"), 'w') as f:
-        for case in selected_cases:
-            print(case, file=f, end="\n")
+        for c in selected_cases:
+            print(c, file=f, end="\n")
+
+    with open(os.path.join(args.output_dir, "selected_advs.txt"), 'w') as f:
+        for k in select_adv_cases:
+            print(k, file=f, end="\n")
 
 
 if __name__ == "__main__":

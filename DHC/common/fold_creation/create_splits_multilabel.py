@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Birth: 2023-03-28 15:27:09.205409913 +0530
-# Modify: 2023-04-06 15:35:15.134017324 +0530
+# Modify: 2023-04-06 15:46:34.930104040 +0530
 
 """Create train, test, validation splits along with cross-validation
 variants."""
@@ -112,8 +112,9 @@ def main():
                                                   args.train_size])
             train_idx, val_idx = next(stratifier.split(
                                             data_train, targets_train))
-            data_train = [data_train[idx] for idx in train_idx]
+
             data_val = [data_train[idx] for idx in val_idx]
+            data_train = [data_train[idx] for idx in train_idx]
 
             targets_train = targets_train[train_idx, :]
             targets_val = targets_train[val_idx, :]
@@ -140,11 +141,12 @@ def main():
 
         for i, (train_idx, test_idx) in enumerate(
                 stratifier.split(data, y_binarized)):
-            data_train = [data_train[idx] for idx in train_idx]
-            data_val = [data_train[idx] for idx in val_idx]
+
+            data_train = [data[idx] for idx in train_idx]
+            data_test = [data[idx] for idx in test_idx]
 
             targets_train = targets_train[train_idx, :]
-            targets_val = targets_train[val_idx, :]
+            targets_test = targets_train[test_idx, :]
 
             if args.val_size != 0.0:
                 val_stratifier = IterativeStratification(
@@ -154,8 +156,9 @@ def main():
                                                       args.train_size])
                 train_idx, val_idx = next(val_stratifier.split(
                                                 data_train, targets_train))
-                data_train = [data_train[idx] for idx in train_idx]
+
                 data_val = [data_train[idx] for idx in val_idx]
+                data_train = [data_train[idx] for idx in train_idx]
 
                 targets_train = targets_train[train_idx, :]
                 targets_val = targets_train[val_idx, :]

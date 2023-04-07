@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Birth: 2023-03-28 15:27:09.205409913 +0530
-# Modify: 2023-04-06 16:39:08.297480015 +0530
+# Modify: 2023-04-07 08:38:20.666268993 +0530
 
 """Create train, test, validation splits along with cross-validation
 variants."""
@@ -109,7 +109,7 @@ def main():
                     n_splits=2,
                     order=2,
                     sample_distribution_per_fold=[args.val_size,
-                                                  args.train_size])
+                                                  1 - args.val_size])
             train_idx, val_idx = next(stratifier.split(
                                             data_train, targets_train))
 
@@ -153,7 +153,7 @@ def main():
                         n_splits=2,
                         order=2,
                         sample_distribution_per_fold=[args.val_size,
-                                                      args.train_size])
+                                                      1 - args.val_size])
                 train_idx, val_idx = next(val_stratifier.split(
                                                 data_train, targets_train))
 

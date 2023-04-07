@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Birth: 2023-03-28 15:27:09.205409913 +0530
-# Modify: 2023-04-06 15:46:34.930104040 +0530
+# Modify: 2023-04-06 16:39:08.297480015 +0530
 
 """Create train, test, validation splits along with cross-validation
 variants."""
@@ -116,8 +116,8 @@ def main():
             data_val = [data_train[idx] for idx in val_idx]
             data_train = [data_train[idx] for idx in train_idx]
 
-            targets_train = targets_train[train_idx, :]
             targets_val = targets_train[val_idx, :]
+            targets_train = targets_train[train_idx, :]
 
         # Save data
         save_data(
@@ -160,8 +160,8 @@ def main():
                 data_val = [data_train[idx] for idx in val_idx]
                 data_train = [data_train[idx] for idx in train_idx]
 
-                targets_train = targets_train[train_idx, :]
                 targets_val = targets_train[val_idx, :]
+                targets_train = targets_train[train_idx, :]
 
             save_data(
                     path=args.output_path,

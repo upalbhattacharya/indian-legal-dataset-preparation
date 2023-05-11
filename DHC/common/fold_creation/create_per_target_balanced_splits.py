@@ -15,7 +15,7 @@ from itertools import combinations
 
 from utils import set_logger
 
-# Setting seed for reproducability
+# setting seed for reproducability
 random.seed(42)
 
 
@@ -118,6 +118,7 @@ def main():
 
     # Create splits
     for target, data in target_data.items():
+        data = set(data)
         total = len(data)
         train_len = round(total * args.train_size)
         test_len = round(total * args.test_size)
@@ -128,48 +129,52 @@ def main():
         if sum_segments != total:
             train_len += total - sum_segments
 
-        train_cases = set(random.sample(sorted(data), train_len))
-        train_test = train_cases.intersection(test)
-        train_val = train_cases.intersection(val)
+        train_target = set(random.sample(sorted(data), train_len))
+        data = data.difference(train_target)
+        test_target = set(random.sample(sorted(data), test_len))
+        data = data.difference(test_target)
+        val_target = data
 
-        if (
-            len(train_test)
-            != 0 & len(train_cases.difference(train_test))
-            > args.min_train
-        ):
-            train_cases = train_cases.difference(train_test)
-        else:
-            diff = args.min_train - len(train_cases.difference(train_test))
-            train_add, test, target_test_data = checkandremove(
-                train_test,
-                test,
-                target_test_data,
-                data_targets,
-                args.min_test,
-                diff,
-            )
-        if len(train_cases.difference(test).difference(val)) != len(
-            train_cases
-        ):
-            common_test = train_cases.intersection(test)
-            common_val = train_cases.intersection(val)
-            val = val.difference(train_cases)
-            test = test.difference(train_cases)
-        train.update(train_cases)
-        data = set(data).difference(train_cases)
-        test_cases = set(random.sample(sorted(data), test_len))
-        if len(test_cases.difference(train).difference(val)) != len(
-            test_cases
-        ):
-            train = train.difference(test_cases)
-            val = val.difference(test_cases)
-        test.update(test_cases)
-        data = set(data).difference(test_cases)
-        val_cases = data
-        val.update(val_cases)
-        target_train_data[target] = train_cases
-        target_test_data[target] = test_cases
-        target_val_data[target] = val_cases
+        # Remove leakage
+        # Priority: Train -> Test -> Validation
+        # Train split
+        train_target, test = checkandremove(
+            datapoints=train_target,
+            segment=test,
+            data_targets=data_targets,
+            min_count=args.min_train,
+        )
+        train_target, val = checkandremove(
+            datapoints=train_target,
+            segment=val,
+            data_targets=data_targets,
+            min_count=args.min_train,
+        )
+        train.update(train_target)
+
+        # Test split
+        test_target, train = checkandremove(
+            datapoints=test_target,
+            segment=train,
+            data_targets=data_targets,
+            min_count=args.min_test,
+        )
+        test_target, val = checkandremove(
+            datapoints=test_target,
+            segment=val,
+            data_targets=data_targets,
+            min_count=args.min_test,
+        )
+        test.update(test_target)
+
+        # Validation split
+        # Can be empty
+        val_target = val_target.difference(train).difference(test)
+        val.update(val_target)
+
+        target_train_data[target] = train_target
+        target_test_data[target] = test_target
+        target_val_data[target] = val_target
 
     # Check leakage
     for seg1, seg2 in combinations([train, test, val], 2):
@@ -212,114 +217,118 @@ def main():
     }
 
     # Save
-    with open(
-        os.path.join(args.output_path, "train", "train_targets.json"), "w"
-    ) as f:
-        json.dump(target_train_data, f, indent=4)
+    save([args.output_path, "train", "train_targets.json"], target_train_data)
+    save([args.output_path, "test", "test_targets.json"], target_test_data)
+    save([args.output_path, "val", "val_targets.json"], target_val_data)
+    save(
+        [args.output_path, "train", "train_targets_num.json"],
+        target_train_data_num,
+    )
+    save(
+        [args.output_path, "test", "test_targets_num.json"],
+        target_test_data_num,
+    )
+    save(
+        [args.output_path, "val", "val_targets_num.json"],
+        target_val_data_num,
+    )
+    save([args.output_path, "train", "train_cases.txt"], train)
+    save([args.output_path, "test", "test_cases.txt"], test)
+    save([args.output_path, "val", "val_cases.txt"], val)
+    save(
+        [args.output_path, "train", "train_target_empty.txt"],
+        target_empty_train,
+    )
 
-    with open(
-        os.path.join(args.output_path, "test", "test_targets.json"), "w"
-    ) as f:
-        json.dump(target_test_data, f, indent=4)
-
-    with open(
-        os.path.join(args.output_path, "val", "val_targets.json"), "w"
-    ) as f:
-        json.dump(target_val_data, f, indent=4)
-
-    with open(
-        os.path.join(args.output_path, "train", "train_targets_num.json"), "w"
-    ) as f:
-        json.dump(target_train_data_num, f, indent=4)
-
-    with open(
-        os.path.join(args.output_path, "test", "test_targets_num.json"), "w"
-    ) as f:
-        json.dump(target_test_data_num, f, indent=4)
-
-    with open(
-        os.path.join(args.output_path, "val", "val_targets_num.json"), "w"
-    ) as f:
-        json.dump(target_val_data_num, f, indent=4)
-
-    with open(
-        os.path.join(args.output_path, "train", "train_cases.txt"), "w"
-    ) as f:
-        for line in train:
-            print(line, file=f, end="\n")
-
-    with open(
-        os.path.join(args.output_path, "test", "test_cases.txt"), "w"
-    ) as f:
-        for line in test:
-            print(line, file=f, end="\n")
-
-    with open(
-        os.path.join(args.output_path, "val", "val_cases.txt"), "w"
-    ) as f:
-        for line in val:
-            print(line, file=f, end="\n")
-
-    with open(
-        os.path.join(args.output_path, "train", "target_train_empty.txt"), "w"
-    ) as f:
-        for line in target_empty_train:
-            print(line, file=f, end="\n")
-
-    with open(
-        os.path.join(args.output_path, "test", "target_test_empty.txt"), "w"
-    ) as f:
-        for line in target_empty_test:
-            print(line, file=f, end="\n")
-
-    with open(
-        os.path.join(args.output_path, "val", "target_val_empty.txt"), "w"
-    ) as f:
-        for line in target_empty_val:
-            print(line, file=f, end="\n")
+    save(
+        [args.output_path, "test", "test_target_empty.txt"],
+        target_empty_test,
+    )
+    save(
+        [args.output_path, "val", "val_target_empty.txt"],
+        target_empty_val,
+    )
 
 
-def checkandremove(
-    datapoints: list,
-    segment: set,
-    target_data: dict,
-    data_targets: dict,
-    min_count: int,
-    diff: int,
-) -> (list, set, dict):
-    """
+def update(
+    segment: set[str], target_seg_data: dict[str, list[str]]
+) -> dict[str, list[str]]:
+    """Update target segment dictionary
 
     Parameters
     ----------
-    datapoints : list
-        Datapoints to check.
-    segment : set
-        Segment to check.
-    target_data : dict
-        Target data information for feasibility check.
-    data_targets : dict
-        Overall data targets for making best selection.
-    min_count : int
-        Minimum of datapoints to try to ensure for each target.
-    diff: int
-        Number of cases to remove.
+    segment : set[str]
+       Updated segment to update target dictionary
+    target_seg_data : dict[str, list[str]]
+        Dictionary target segment to update
 
     Returns
     -------
-    (list, set, dict)
-        List of points that can be removed, new segment values, updated
-        dictionary of values.
+    dict[str, list[str]]
+        Updated dictionary target segment
     """
-    if len(datapoints) == 0:
-        return datapoints, segment, target_data
+    for k, v in target_seg_data.items():
+        target_seg_data[k] = list(v.intersection(segment))
+    return target_seg_data
 
-    # Order in increasing number of associated targets
-    ordered = sorted(datapoints, lambda x: len(data_targets[x]))
-    remove = []
 
-    for datapoint in ordered:
-        for target in data_targets[datapoint]:
+def checkandremove(
+    datapoints: list[str],
+    segment: set[str],
+    data_targets: dict[str, list[str]],
+    min_count: int,
+) -> (list[str], set[str]):
+    """Check and remove potential leakage points
 
+    Parameters
+    ----------
+    datapoints : list[str]
+        Points to check for leakage
+    segment : set[str]
+        Segment against which to check leakage
+    data_targets : dict[str, list[str]]
+        Targets for each datapoint (used for selecting points to remove/add)
+    min_count : int
+        Minimum count to ensure for datapoints
+
+    Returns
+    -------
+    (list[str], set[str])
+        Updated datapoints and segment
+    """
+    datap_seg_overlap = datapoints.intersection(segment)
+    if len(datap_seg_overlap) != 0:
+        datapoints = datapoints.difference(datap_seg_overlap)
+        if len(datapoints) < min_count:
+            ordered = sorted(
+                datap_seg_overlap, key=lambda x: len(data_targets[x])
+            )
+            to_add = ordered[: min_count - len(datapoints)]
+            datapoints.update(to_add)
+            segment = segment.difference(to_add)
+    return datapoints, segment
+
+
+def save(path: list, obj: object) -> None:
+    """Utility to save generated information
+
+    Parameters
+    ----------
+    path : list
+        Path to create from list to save data to
+    obj : object
+        Object to save
+    """
+    savepath = os.path.join(*path)
+    if type(obj) in [list, set]:
+        with open(savepath, "w") as f:
+            for line in obj:
+                print(line, file=f, end="\n")
+    elif type(obj) == dict:
+        with open(savepath, "w") as f:
+            json.dump(obj, f, indent=4)
+    else:
+        logging.error(f"Unrecognised format {type(obj)} for saving>")
 
 
 if __name__ == "__main__":

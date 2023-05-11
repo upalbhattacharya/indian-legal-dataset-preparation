@@ -5,7 +5,7 @@
 
 # For Folds
 # FOLDS=1
-# SPLITS="train test val"
+SPLITS="train test val"
 #
 # for fold in $(seq 0 $(($FOLDS - 1)))
 # do
@@ -23,11 +23,24 @@
 
 # For overall
 
-./select_advocates.py -ac ~/Datasets/DHC/common/adv_info/adv_cases.json \
-    -p ~/Datasets/DHC/common/adv_info/pet_cases.json \
-    -d ~/Datasets/DHC/common/adv_info/res_cases.json \
-    -s ~/Datasets/DHC/common/preprocess/fact_selected_cases.txt \
-    -n 5 \
-    -o ~/Datasets/DHC/variations/v5/adv_info
+# ./select_advocates.py -ac ~/Datasets/DHC/common/adv_info/adv_cases.json \
+#     -p ~/Datasets/DHC/common/adv_info/pet_cases.json \
+#     -d ~/Datasets/DHC/common/adv_info/res_cases.json \
+#     -s ~/Datasets/DHC/common/preprocess/fact_selected_cases.txt \
+#     -n 10 \
+#     -o ~/Datasets/DHC/variations/v5/adv_info/overall
+
+# For one split
+
+for split in $SPLITS
+do
+    ./select_advocates.py -ac ~/Datasets/DHC/variations/v5/adv_info/overall/adv_cases.json \
+        -n  0 \
+        -p ~/Datasets/DHC/variations/v5/adv_info/overall/pet_cases.json \
+        -d ~/Datasets/DHC/variations/v5/adv_info/overall/res_cases.json \
+        -o ~/Datasets/DHC/variations/v5/adv_info/${split}/ \
+        -s ~/Datasets/DHC/variations/v5/split_info/${split}/${split}_cases.txt \
+        -sa ~/Datasets/DHC/variations/v5/adv_info/overall/selected_advs.txt
+done
 
 exit 0

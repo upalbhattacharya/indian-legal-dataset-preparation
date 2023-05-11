@@ -172,13 +172,11 @@ def main():
         val_target = val_target.difference(train).difference(test)
         val.update(val_target)
 
-        target_train_data[target] = train_target
-        target_test_data[target] = test_target
-        target_val_data[target] = val_target
-
-    # Check leakage
-    for seg1, seg2 in combinations([train, test, val], 2):
-        logging.info(f"Overlap: {len(seg1.intersection(seg2))}")
+    # Populate values
+    for target, data in target_data.items():
+        target_train_data[target] = set(data).intersection(train)
+        target_test_data[target] = set(data).intersection(test)
+        target_val_data[target] = set(data).intersection(val)
 
     # Check empty
     target_empty_train = [
@@ -190,6 +188,132 @@ def main():
     target_empty_val = [
         target for target, data in target_val_data.items() if len(data) == 0
     ]
+
+    logging.info(f"Targets with no training data: {target_empty_train}")
+    logging.info(f"Targets with no testing data: {target_empty_test}")
+    # Fix empty
+    while any(
+        [
+            len(segment) != 0
+            for segment in [target_empty_train, target_empty_test]
+        ]
+    ):
+        for target in target_empty_train:
+            if len(set(target_data[target]).intersection(train)) != 0:
+                logging.info(f"Representation for {target} exists. Skip.")
+                continue
+            val_data = set(target_data[target]).intersection(val)
+            test_data = set(target_data[target]).intersection(test)
+            # Take from validation first (if it exists)
+            if len(val_data) != 0:
+                to_add = random.sample(
+                    sorted(val_data),
+                    min(len(val_data), args.min_train),
+                )
+                val = val.difference(to_add)
+                # target_val_data = {
+                #     k: v.intersection(val) for k, v in target_val_data.items()
+                # }
+                train.update(to_add)
+            elif len(test_data) != 0:
+                # Retain at least one case for test
+                to_add = random.sample(
+                    sorted(test_data),
+                    min(len(test_data), args.min_train) - 1,
+                )
+                test = test.difference(to_add)
+                # target_test_data = {
+                #     k: v.intersection(test)
+                #     for k, v in target_test_data.items()
+                # }
+                train.update(to_add)
+            else:
+                logging.warning(
+                    f"Unable to ensure representation for target {target} in "
+                    "training split"
+                )
+
+        for target, data in target_data.items():
+            target_train_data[target] = set(data).intersection(train)
+            target_test_data[target] = set(data).intersection(test)
+            target_val_data[target] = set(data).intersection(val)
+
+        target_empty_train = [
+            target
+            for target, data in target_train_data.items()
+            if len(data) == 0
+        ]
+        target_empty_test = [
+            target
+            for target, data in target_test_data.items()
+            if len(data) == 0
+        ]
+
+        for target in target_empty_test:
+            if len(set(target_data[target]).intersection(test)) != 0:
+                logging.info(f"Representation for {target} exists. Skip.")
+                continue
+            val_data = set(target_data[target]).intersection(val)
+            train_data = set(target_data[target]).intersection(train)
+            # Take from validation first (if it exists)
+            if len(val_data) != 0:
+                to_add = random.sample(
+                    sorted(val_data),
+                    min(len(val_data), args.min_test),
+                )
+                val = val.difference(to_add)
+                # target_val_data = {
+                #     k: v.intersection(val) for k, v in target_val_data.items()
+                # }
+                test.update(to_add)
+            elif len(train_data) != 0:
+                # Retain at least one case for test
+                to_add = random.sample(
+                    sorted(train_data),
+                    min(len(train_data), args.min_test) - 1,
+                )
+                train = train.difference(to_add)
+                # target_test_data = {
+                #     k: v.intersection(test)
+                #     for k, v in target_test_data.items()
+                # }
+                test.update(to_add)
+            else:
+                logging.warning(
+                    f"Unable to ensure representation for target {target} in "
+                    "testing split"
+                )
+        for target, data in target_data.items():
+            target_train_data[target] = set(data).intersection(train)
+            target_test_data[target] = set(data).intersection(test)
+            target_val_data[target] = set(data).intersection(val)
+
+        target_empty_train = [
+            target
+            for target, data in target_train_data.items()
+            if len(data) == 0
+        ]
+        target_empty_test = [
+            target
+            for target, data in target_test_data.items()
+            if len(data) == 0
+        ]
+
+        logging.info(f"Targets with no training data: {target_empty_train}")
+        logging.info(f"Targets with no testing data: {target_empty_test}")
+        if any(
+            [
+                len(segment) == 0
+                for segment in [target_empty_train, target_empty_test]
+            ]
+        ):
+            logging.info("Rerunning")
+    target_empty_val = [
+        target for target, data in target_val_data.items() if len(data) == 0
+    ]
+    # Check leakage
+    for seg1, seg2 in combinations([train, test, val], 2):
+        logging.info(f"Overlap: {len(seg1.intersection(seg2))}")
 
     # Convert to list
     target_train_data = {k: list(v) for k, v in target_train_data.items()}

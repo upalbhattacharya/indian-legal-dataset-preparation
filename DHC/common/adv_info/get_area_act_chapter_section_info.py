@@ -138,7 +138,7 @@ def main():
             else:
 
                 adv_area_act_chapter_section_info[adv]["areas"].extend(
-                                                    act_sec["areas"].keys())
+                                                    act_sec["areas"])
 
                 adv_area_act_chapter_section_info[adv]["acts"].extend(
                                                     act_sec["acts"].keys())

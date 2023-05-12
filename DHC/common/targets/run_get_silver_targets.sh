@@ -6,4 +6,5 @@
   --data_attribute_info ~/Datasets/DHC/variations/v5/area_act_chapter_section_info/overall/case_area_act_chapter_section_info.json \
   --similarity 1.0 \
   --key "areas" \
+  --omit_attribute ~/Datasets/DHC/variations/v5/area_act_chapter_section_info/areas_to_omit.txt \
   --output_dir ~/Datasets/DHC/variations/v5/targets

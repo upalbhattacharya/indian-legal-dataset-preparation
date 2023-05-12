@@ -49,6 +49,13 @@ def main():
         help="Information key for use in attribute dictionaries",
     )
     parser.add_argument(
+        "-oa",
+        "--omit_attribute",
+        type=str,
+        default=None,
+        help="Attributes to omit in selecting silver standards",
+    )
+    parser.add_argument(
         "-o", "--output_dir", help="Path to save generated target information"
     )
 
@@ -68,6 +75,11 @@ def main():
         target_attributes = json.load(f)
     with open(args.data_attribute_info, "r") as f:
         data_attributes = json.load(f)
+    omit = []
+    if args.omit_attribute is not None:
+        with open(args.omit_attribute, "r") as f:
+            omit = f.readlines()
+        omit = list(filter(None, map(lambda x: x.strip("\n"), omit)))
 
     data_silver_targets = {}
 
@@ -78,6 +90,7 @@ def main():
                 target
                 for attribute in attributes[args.key]
                 for target in attribute_targets[attribute]
+                if attribute not in omit
             ]
         )
         # Retain targets with specified overlap

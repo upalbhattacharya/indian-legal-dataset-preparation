@@ -3,7 +3,7 @@
 # Last Modified: Wed Jan 05, 2022  02:17PM
 
 """
-Find section, chapter and act information of cases.
+Find section, chapter, act and area information of cases.
 """
 
 import argparse
@@ -85,7 +85,35 @@ def main():
         help="Cases to select",
     )
     parser.add_argument(
-        "-o", "--output_path", help="Path to save generated data."
+        "-sar",
+        "--selected_areas",
+        type=str,
+        default=None,
+        help="Areas to select",
+    )
+    parser.add_argument(
+        "-sa",
+        "--selected_acts",
+        type=str,
+        default=None,
+        help="Acts to select",
+    )
+    parser.add_argument(
+        "-sc",
+        "--selected_chapters",
+        type=str,
+        default=None,
+        help="Chapters to select",
+    )
+    parser.add_argument(
+        "-ss",
+        "--selected_sections",
+        type=str,
+        default=None,
+        help="Sections to select",
+    )
+    parser.add_argument(
+        "-o", "--output_path", help="Path to save generated data"
     )
     parser.add_argument(
         "-l",
@@ -115,7 +143,30 @@ def main():
             selected_cases = list(
                 filter(None, map(lambda x: x.strip("\n"), selected_cases))
             )
-
+    if args.selected_areas is not None:
+        with open(args.selected_areas, "r") as f:
+            selected_areas = f.readlines()
+            selected_areas = list(
+                filter(None, map(lambda x: x.strip("\n"), selected_areas))
+            )
+    if args.selected_acts is not None:
+        with open(args.selected_acts, "r") as f:
+            selected_acts = f.readlines()
+            selected_acts = list(
+                filter(None, map(lambda x: x.strip("\n"), selected_acts))
+            )
+    if args.selected_chapters is not None:
+        with open(args.selected_chapters, "r") as f:
+            selected_chapters = f.readlines()
+            selected_chapters = list(
+                filter(None, map(lambda x: x.strip("\n"), selected_chapters))
+            )
+    if args.selected_sections is not None:
+        with open(args.selected_sections, "r") as f:
+            selected_sections = f.readlines()
+            selected_sections = list(
+                filter(None, map(lambda x: x.strip("\n"), selected_sections))
+            )
     case_area_act_chapter_section_info = {}
     area_case_info = defaultdict(list)
     act_case_info = defaultdict(list)
@@ -138,6 +189,23 @@ def main():
         act_sec = get_area_act_chapter_section_info(
             secs, area_info, chapter_info
         )
+        # Retain provided statute information
+        if args.selected_areas is not None:
+            act_sec["areas"] = list(
+                set(act_sec["areas"]).intersection(set(selected_areas))
+            )
+        if args.selected_acts is not None:
+            act_sec["acts"] = list(
+                set(act_sec["acts"]).intersection(set(selected_acts))
+            )
+        if args.selected_chapters is not None:
+            act_sec["chapters"] = list(
+                set(act_sec["chapters"]).intersection(set(selected_chapters))
+            )
+        if args.selected_sections is not None:
+            act_sec["sections"] = list(
+                set(act_sec["sections"]).intersection(set(selected_sections))
+            )
         case_area_act_chapter_section_info[flname] = act_sec
 
         for act in act_sec["acts"]:

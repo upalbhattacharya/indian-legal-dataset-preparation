@@ -1,7 +1,6 @@
 site_name: Indian Legal Dataset Preparation
 nav:
   - Code Reference: reference/
-  - ../src/preprocess/
 
 theme:
   name: material

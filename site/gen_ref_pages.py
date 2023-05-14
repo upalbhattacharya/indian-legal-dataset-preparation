@@ -1,4 +1,7 @@
-"""Generate the code reference pages and navigation."""
+"""Generate the code reference pages and navigation.
+Uses index.md in directories to generate directory/module documentation pages as
+well.
+"""
 
 import os
 from itertools import chain
@@ -20,7 +23,6 @@ for path in sorted(
 
     parts = tuple(module_path.parts)
     nav_parts = tuple(nav_path.parts)
-    print(os.path.splitext(path)[-1])
 
     if parts[-1] == "__init__" or (
         parts[-1] == "index" and os.path.splitext(path)[-1] == ".md"
@@ -37,7 +39,6 @@ for path in sorted(
     if os.path.splitext(path)[-1] == ".md":
         with open(path, "r") as f:
             index = f.read()
-
         with mkdocs_gen_files.open(full_doc_path, "w") as fd:
             fd.write(index)
     else:

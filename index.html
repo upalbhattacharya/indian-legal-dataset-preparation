@@ -1015,21 +1015,6 @@
   
 
     
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="src/preprocess/" class="md-nav__link">
-        None
-      </a>
-    </li>
-  
-
-    
   </ul>
 </nav>
                   </div>
@@ -1065,7 +1050,20 @@
 
 <h1 id="indian-legal-dataset-preparations-documentation">Indian Legal Dataset Preparation's Documentation</h1>
 <p>Welcome to the documentation for the <a href="https://github.com/upalbhattacharya/indian-legal-dataset-preparation">Indian Legal Dataset Preparation
-Repo</a></p>
+Repo</a>.
+This repository consists of various scripts to process Indian legal case data.
+The scripts have been written to work with the HTML structure of documents as
+provided by <a href="https://indiankanoon.org">Indian Kanoon</a> but should work with minor
+tweaking for other formats. The functionalities provided are:</p>
+<ul>
+<li>Basic text cleanup.</li>
+<li>Extraction of textual portions of case documents.</li>
+<li>Crude identification and removal preamble sections of documents.</li>
+<li>Extraction of statutes: (Areas, Acts, Chapters and Sections)</li>
+<li>Identification of rhetorical roles of sentences (utilised a modified version
+  of <a href="https://github.com/Law-AI/semantic-segmentation">Semantic Segmentation</a>.</li>
+<li>Extraction of names of advocates (as petitioners or respondents).</li>
+</ul>
 
 
 

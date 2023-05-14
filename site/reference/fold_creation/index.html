@@ -9,21 +9,21 @@
       
       
       
-        <link rel="prev" href="../get_targets/">
+        <link rel="prev" href="../check/utils/">
       
       
-        <link rel="next" href="../utils/">
+        <link rel="next" href="create_folds/">
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.12">
     
     
       
-        <title>get_winning_advs - Indian Legal Dataset Preparation</title>
+        <title>fold_creation - Indian Legal Dataset Preparation</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
       
       
 
@@ -39,9 +39,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#src.targets.get_winning_advs" class="md-skip">
+        <a href="#readme" class="md-skip">
           Skip to content
         </a>
       
@@ -79,7 +79,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Indian Legal Dataset Preparation" class="md-header__button md-logo" aria-label="Indian Legal Dataset Preparation" data-md-component="logo">
+    <a href="../.." title="Indian Legal Dataset Preparation" class="md-header__button md-logo" aria-label="Indian Legal Dataset Preparation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              get_winning_advs
+              fold_creation
             
           </span>
         </div>
@@ -165,7 +165,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Indian Legal Dataset Preparation" class="md-nav__button md-logo" aria-label="Indian Legal Dataset Preparation" data-md-component="logo">
+    <a href="../.." title="Indian Legal Dataset Preparation" class="md-nav__button md-logo" aria-label="Indian Legal Dataset Preparation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -240,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adv_info/get_advocates/" class="md-nav__link">
+      <a href="../adv_info/get_advocates/" class="md-nav__link">
         get_advocates
       </a>
     </li>
@@ -254,7 +254,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adv_info/get_area_act_chapter_section_info/" class="md-nav__link">
+      <a href="../adv_info/get_area_act_chapter_section_info/" class="md-nav__link">
         get_area_act_chapter_section_info
       </a>
     </li>
@@ -268,7 +268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../adv_info/utils/" class="md-nav__link">
+      <a href="../adv_info/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -301,7 +301,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../area_act_chapter_section_info/">area_act_chapter_section_info</a>
+          <a href="../area_act_chapter_section_info/">area_act_chapter_section_info</a>
           
             <label for="__nav_1_2">
               <span class="md-nav__icon md-icon"></span>
@@ -322,7 +322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../area_act_chapter_section_info/get_area_act_chapter_section_info/" class="md-nav__link">
+      <a href="../area_act_chapter_section_info/get_area_act_chapter_section_info/" class="md-nav__link">
         get_area_act_chapter_section_info
       </a>
     </li>
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../area_act_chapter_section_info/utils/" class="md-nav__link">
+      <a href="../area_act_chapter_section_info/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -384,7 +384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../check/check_adv_leakage/" class="md-nav__link">
+      <a href="../check/check_adv_leakage/" class="md-nav__link">
         check_adv_leakage
       </a>
     </li>
@@ -398,7 +398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../check/check_section_leakage/" class="md-nav__link">
+      <a href="../check/check_section_leakage/" class="md-nav__link">
         check_section_leakage
       </a>
     </li>
@@ -412,7 +412,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../check/utils/" class="md-nav__link">
+      <a href="../check/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -431,21 +431,23 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" checked>
       
       
       
         
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../fold_creation/">fold_creation</a>
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">fold_creation</a>
           
             <label for="__nav_1_4">
               <span class="md-nav__icon md-icon"></span>
@@ -453,7 +455,7 @@
           
         </div>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_1_4">
           <span class="md-nav__icon md-icon"></span>
           fold_creation
@@ -466,7 +468,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/create_folds/" class="md-nav__link">
+      <a href="create_folds/" class="md-nav__link">
         create_folds
       </a>
     </li>
@@ -480,7 +482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/create_per_target_balanced_splits/" class="md-nav__link">
+      <a href="create_per_target_balanced_splits/" class="md-nav__link">
         create_per_target_balanced_splits
       </a>
     </li>
@@ -494,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/create_splits/" class="md-nav__link">
+      <a href="create_splits/" class="md-nav__link">
         create_splits
       </a>
     </li>
@@ -508,7 +510,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/create_splits_multilabel/" class="md-nav__link">
+      <a href="create_splits_multilabel/" class="md-nav__link">
         create_splits_multilabel
       </a>
     </li>
@@ -522,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/get_target_splits/" class="md-nav__link">
+      <a href="get_target_splits/" class="md-nav__link">
         get_target_splits
       </a>
     </li>
@@ -536,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../fold_creation/utils/" class="md-nav__link">
+      <a href="utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -569,7 +571,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../preprocess/">preprocess</a>
+          <a href="../preprocess/">preprocess</a>
           
             <label for="__nav_1_5">
               <span class="md-nav__icon md-icon"></span>
@@ -590,7 +592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/align_statute_spans/" class="md-nav__link">
+      <a href="../preprocess/align_statute_spans/" class="md-nav__link">
         align_statute_spans
       </a>
     </li>
@@ -604,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/clean/" class="md-nav__link">
+      <a href="../preprocess/clean/" class="md-nav__link">
         clean
       </a>
     </li>
@@ -618,7 +620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/combine/" class="md-nav__link">
+      <a href="../preprocess/combine/" class="md-nav__link">
         combine
       </a>
     </li>
@@ -632,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/extract_statutes/" class="md-nav__link">
+      <a href="../preprocess/extract_statutes/" class="md-nav__link">
         extract_statutes
       </a>
     </li>
@@ -646,7 +648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/get_roles_sentences/" class="md-nav__link">
+      <a href="../preprocess/get_roles_sentences/" class="md-nav__link">
         get_roles_sentences
       </a>
     </li>
@@ -660,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/get_sentences/" class="md-nav__link">
+      <a href="../preprocess/get_sentences/" class="md-nav__link">
         get_sentences
       </a>
     </li>
@@ -674,7 +676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/mask_advs/" class="md-nav__link">
+      <a href="../preprocess/mask_advs/" class="md-nav__link">
         mask_advs
       </a>
     </li>
@@ -688,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/mask_ent/" class="md-nav__link">
+      <a href="../preprocess/mask_ent/" class="md-nav__link">
         mask_ent
       </a>
     </li>
@@ -702,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/mask_statutes/" class="md-nav__link">
+      <a href="../preprocess/mask_statutes/" class="md-nav__link">
         mask_statutes
       </a>
     </li>
@@ -716,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/process/" class="md-nav__link">
+      <a href="../preprocess/process/" class="md-nav__link">
         process
       </a>
     </li>
@@ -730,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/segment/" class="md-nav__link">
+      <a href="../preprocess/segment/" class="md-nav__link">
         segment
       </a>
     </li>
@@ -744,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../preprocess/utils/" class="md-nav__link">
+      <a href="../preprocess/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -819,7 +821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selection/notebooks/check_skmultilearn/" class="md-nav__link">
+      <a href="../selection/notebooks/check_skmultilearn/" class="md-nav__link">
         check_skmultilearn
       </a>
     </li>
@@ -840,7 +842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selection/select_advocates/" class="md-nav__link">
+      <a href="../selection/select_advocates/" class="md-nav__link">
         select_advocates
       </a>
     </li>
@@ -854,7 +856,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selection/select_cases_from_groups/" class="md-nav__link">
+      <a href="../selection/select_cases_from_groups/" class="md-nav__link">
         select_cases_from_groups
       </a>
     </li>
@@ -868,7 +870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selection/select_databank_cases/" class="md-nav__link">
+      <a href="../selection/select_databank_cases/" class="md-nav__link">
         select_databank_cases
       </a>
     </li>
@@ -882,7 +884,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../selection/utils/" class="md-nav__link">
+      <a href="../selection/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -901,16 +903,14 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7" >
       
       
       
@@ -919,7 +919,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_7_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_7_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_1_7">
           <span class="md-nav__icon md-icon"></span>
           targets
@@ -932,7 +932,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../get_balanced_targets/" class="md-nav__link">
+      <a href="../targets/get_balanced_targets/" class="md-nav__link">
         get_balanced_targets
       </a>
     </li>
@@ -946,7 +946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../get_per_charge_win_ratios/" class="md-nav__link">
+      <a href="../targets/get_per_charge_win_ratios/" class="md-nav__link">
         get_per_charge_win_ratios
       </a>
     </li>
@@ -960,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../get_silver_targets/" class="md-nav__link">
+      <a href="../targets/get_silver_targets/" class="md-nav__link">
         get_silver_targets
       </a>
     </li>
@@ -974,7 +974,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../get_targets/" class="md-nav__link">
+      <a href="../targets/get_targets/" class="md-nav__link">
         get_targets
       </a>
     </li>
@@ -986,48 +986,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          get_winning_advs
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../targets/get_winning_advs/" class="md-nav__link">
         get_winning_advs
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#src.targets.get_winning_advs" class="md-nav__link">
-    src.targets.get_winning_advs
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1039,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../utils/" class="md-nav__link">
+      <a href="../targets/utils/" class="md-nav__link">
         utils
       </a>
     </li>
@@ -1068,7 +1031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../src/preprocess/" class="md-nav__link">
+      <a href="../../src/preprocess/" class="md-nav__link">
         None
       </a>
     </li>
@@ -1092,21 +1055,8 @@
   
   
   
+    
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#src.targets.get_winning_advs" class="md-nav__link">
-    src.targets.get_winning_advs
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -1121,36 +1071,20 @@
                   
 
 
-  <h1>get_winning_advs</h1>
-
-<div class="doc doc-object doc-module">
-
-
-<a id="src.targets.get_winning_advs"></a>
-  <div class="doc doc-contents first">
-  
-      <p>Getting winning advocates of each case based on ruling in favour of
-Petitioner or Defendant</p>
-
-  
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-  </div>
-
-</div>
+<h1 id="readme">README</h1>
+<p>Overview of scripts.</p>
+<ul>
+<li><code>create_per_target_balanced_splits.py</code>: Creates a train-test-validation split
+  on a set of datapoints given their targets. For each target, splits the
+  datapoints of the target into three splits by the given proportion and ensures
+  a minimal (user-defined) value of representation of each target in the
+  training and testing splits. DOES NOT ensure the same for the validation split
+  due to insufficient representation for a large number of targets (for the
+  advocate recommendation use-case).</li>
+<li><code>run_create_per_target_balanced_splits.sh</code>: Helper script for executing
+   <code>create_per_target_balanced_splits.py</code> by passing command-line arguments.</li>
+</ul>
+<h1 id="todo-update-other-scripts">TODO: Update other scripts</h1>
 
 
 
@@ -1188,10 +1122,10 @@ Petitioner or Defendant</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.c2be25ad.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c2be25ad.min.js"></script>
       
     
   </body>

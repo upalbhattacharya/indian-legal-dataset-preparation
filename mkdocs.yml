@@ -1,6 +1,7 @@
 site_name: Indian Legal Dataset Preparation
 nav:
   - Code Reference: reference/
+  - ../src/preprocess/
 
 theme:
   name: material
@@ -12,4 +13,5 @@ plugins:
     - docs/gen_ref_pages.py
 - literate-nav:
     nav_file: SUMMARY.md
+- section-index
 - mkdocstrings

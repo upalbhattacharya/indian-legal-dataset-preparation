@@ -85,6 +85,7 @@ def main():
 
     for data, attributes in data_attributes.items():
         logging.info(f"Getting silver-standard targets for {data}")
+        logging.info(f"Found attributes: {attributes}")
         potential_targets = set(
             [
                 target

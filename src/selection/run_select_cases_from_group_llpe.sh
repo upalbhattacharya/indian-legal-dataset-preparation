@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
 ./select_cases_from_groups.py -i ~/Datasets/SC_50k/common/area_act_chapter_section_info/case_area_act_chapter_section_info.json \
+    -sc ~/Datasets/LLPE/variations/v1/area_act_chapter_section_info/cases_to_select_from.txt \
     -s ~/Datasets/IndiaCode/new/CentralActs/section_chapters.json \
     -a ~/Datasets/DHC/raw/area_survey/act_areas.json \
-    -o ~/Datasets/LLPE/variations/v1/area_act_chapter_section_info \
+    -o ~/Datasets/LLPE/variations/v1/area_act_chapter_section_info/train \
     -c "(('Arms Act, 1959_25' in sections) or
         ('Arms Act, 1959_27' in sections) or
         ('Code of Civil Procedure, 1882_115' in sections) or
